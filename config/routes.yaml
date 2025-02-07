@@ -1,5 +1,21 @@
-controllers:
+games:
     resource:
-        path: ../src/Controller/
-        namespace: App\Controller
+        path: ../src/Game/Infrastructure/Controller
+        namespace: App\Game\Infrastructure\Controller
     type: attribute
+    prefix: api/games
+    trailing_slash_on_root: false
+players:
+    resource:
+        path: ../src/Player/Infrastructure/Controller
+        namespace: App\Player\Infrastructure\Controller
+    type: attribute
+    prefix: api/players
+    trailing_slash_on_root: false
+scoring:
+    resource:
+        path: ../src/Scoring/Infrastructure/Controller
+        namespace: App\Scoring\Infrastructure\Controller
+    type: attribute
+    prefix: api/scoring
+    trailing_slash_on_root: false

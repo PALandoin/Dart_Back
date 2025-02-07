@@ -6,10 +6,10 @@ use App\Shared\Domain\Bus\Command\Command;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class MessengerCommandBus
+final readonly class MessengerCommandBus
 {
     public function __construct(
-        private readonly MessageBusInterface $commandBus,
+        private MessageBusInterface $commandBus,
     ) {
     }
 

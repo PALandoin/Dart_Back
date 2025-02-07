@@ -15,6 +15,7 @@ final class MessengerQueryBus
     public function __construct(
         private readonly MessageBusInterface $queryBus,
     ) {
+        $this->messageBus = $queryBus;
     }
 
     public function ask(Query $query): mixed

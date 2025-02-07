@@ -42,6 +42,6 @@ final class PlayerFactory extends PersistentProxyObjectFactory
     protected function initialize(): static
     {
         return $this// ->afterInstantiate(function(Player $player): void {})
-            ;
+        ;
     }
 }

@@ -13,8 +13,7 @@ readonly class CreatePlayerHandler implements CommandHandler
 {
     public function __construct(
         private EventDispatcherInterface $eventDispatcher,
-    )
-    {
+    ) {
     }
 
     public function __invoke(CreatePlayer $createPlayer): void

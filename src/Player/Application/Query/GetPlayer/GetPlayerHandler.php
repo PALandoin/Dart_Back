@@ -12,8 +12,7 @@ readonly class GetPlayerHandler implements QueryHandler
 {
     public function __construct(
         private PlayerRepository $playerRepository,
-    )
-    {
+    ) {
     }
 
     public function __invoke(GetPlayer $getPlayer): PlayerResponse

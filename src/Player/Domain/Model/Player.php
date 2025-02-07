@@ -15,8 +15,7 @@ class Player implements Model
 
     public function __construct(
         private string $name,
-    )
-    {
+    ) {
     }
 
     public static function register(string $name): self

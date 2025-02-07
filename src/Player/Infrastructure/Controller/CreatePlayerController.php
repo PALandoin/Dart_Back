@@ -20,8 +20,7 @@ readonly class CreatePlayerController
     public function __construct(
         private MessengerCommandBus $commandBus,
         private MessengerQueryBus $queryBus,
-    )
-    {
+    ) {
     }
 
     public function __invoke(#[MapRequestPayload] CreatePlayer $createPlayer, Request $request): JsonResponse

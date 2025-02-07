@@ -15,8 +15,7 @@ readonly class OnPlayerCreated
     public function __construct(
         private PlayerRepository $playerRepository,
         private ValidatorInterface $validator,
-    )
-    {
+    ) {
     }
 
     public function __invoke(PlayerCreatedEvent $event): void

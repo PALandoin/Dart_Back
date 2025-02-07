@@ -12,7 +12,7 @@ class PlayerResponse implements Response
     public int $id;
     public string $name;
 
-    public static function fromModel(Model $model): static
+    public static function fromModel(Model $model): self
     {
         if (!$model instanceof Player) {
             throw new UnexpectedModelException($model, Player::class);

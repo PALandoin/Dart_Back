@@ -15,9 +15,16 @@ readonly class GetPlayerHandler implements QueryHandler
     ) {
     }
 
+    /**
+     * @throws \Exception
+     */
     public function __invoke(GetPlayer $getPlayer): PlayerResponse
     {
         $model = $this->playerRepository->find($getPlayer->id);
+
+        if (null === $model) {
+            throw new \Exception('Player not found', 404);
+        }
 
         return PlayerResponse::fromModel($model);
     }

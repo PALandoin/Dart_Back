@@ -6,5 +6,5 @@ use App\Shared\Domain\Model\Model;
 
 interface Response
 {
-    public static function fromModel(Model $model): static;
+    public static function fromModel(Model $model): self;
 }

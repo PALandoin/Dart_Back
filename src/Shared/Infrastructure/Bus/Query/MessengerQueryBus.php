@@ -13,7 +13,7 @@ final class MessengerQueryBus
     }
 
     public function __construct(
-        private readonly MessageBusInterface $queryBus,
+        MessageBusInterface $queryBus,
     ) {
         $this->messageBus = $queryBus;
     }

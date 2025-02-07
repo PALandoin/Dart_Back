@@ -30,6 +30,8 @@ readonly class CreatePlayerController
 
             $playerId = GlobalValuesBag::getInstance()->get('player_id');
 
+            assert(is_int($playerId));
+
             $getPlayer = new GetPlayer($playerId);
             $player = $this->queryBus->ask($getPlayer);
 

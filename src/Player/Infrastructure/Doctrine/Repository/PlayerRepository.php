@@ -9,6 +9,8 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<Player>
+ *
+ * @method Player|null find($id, $lockMode = null, $lockVersion = null)
  */
 class PlayerRepository extends ServiceEntityRepository implements PlayerRepositoryInterface
 {

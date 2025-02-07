@@ -18,12 +18,24 @@ doctrine:
             Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
         auto_mapping: true
         mappings:
-            App:
-                type: attribute
+            Game:
+                type: xml
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
-                alias: App
+                dir: '%kernel.project_dir%/src/Game/Infrastructure/Doctrine/Mapping'
+                prefix: 'App\Game\Domain\Model'
+                alias: Game
+            Player:
+                type: xml
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Player/Infrastructure/Doctrine/Mapping'
+                prefix: 'App\Player\Domain\Model'
+                alias: Player
+            Scoring:
+                type: xml
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Scoring/Infrastructure/Doctrine/Mapping'
+                prefix: 'App\Scoring\Domain\Model'
+                alias: Scoring
         controller_resolver:
             auto_mapping: false
 

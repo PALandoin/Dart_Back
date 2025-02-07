@@ -4,5 +4,4 @@ namespace App\Shared\Domain\Model;
 
 interface Model
 {
-
 }

@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 readonly class OnPlayerCreated
 {
     public function __construct(
-        private PlayerRepository   $playerRepository,
+        private PlayerRepository $playerRepository,
         private ValidatorInterface $validator,
     )
     {

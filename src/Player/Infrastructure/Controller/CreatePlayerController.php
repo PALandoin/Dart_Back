@@ -19,7 +19,7 @@ readonly class CreatePlayerController
 {
     public function __construct(
         private MessengerCommandBus $commandBus,
-        private MessengerQueryBus   $queryBus,
+        private MessengerQueryBus $queryBus,
     )
     {
     }

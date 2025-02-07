@@ -10,7 +10,6 @@ readonly class CreatePlayer implements Command
     public function __construct(
         #[Assert\NotBlank(allowNull: false)]
         public string $name,
-    )
-    {
+    ) {
     }
 }

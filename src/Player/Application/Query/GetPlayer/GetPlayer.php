@@ -8,7 +8,6 @@ class GetPlayer implements Query
 {
     public function __construct(
         public int $id,
-    )
-    {
+    ) {
     }
 }

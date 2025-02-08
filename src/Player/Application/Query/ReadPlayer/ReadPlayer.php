@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Player\Application\Query\GetPlayer;
+namespace App\Player\Application\Query\ReadPlayer;
 
 use App\Shared\Domain\Bus\Query\Query;
 
-class GetPlayer implements Query
+final class ReadPlayer implements Query
 {
     public function __construct(
         public int $id,

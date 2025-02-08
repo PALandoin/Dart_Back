@@ -2,28 +2,27 @@
 
 namespace App\Player\Infrastructure\EventListener;
 
-use App\Player\Domain\Event\PlayerCreatedEvent;
+use App\Player\Domain\Event\PlayerUpdatedEvent;
 use App\Player\Domain\Repository\PlayerRepository;
-use App\Shared\Infrastructure\Service\GlobalValuesBag;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[AsEventListener(event: PlayerCreatedEvent::class, method: '__invoke')]
-readonly class OnPlayerCreated
+#[AsEventListener(event: PlayerUpdatedEvent::class, method: 'onPlayerUpdated')]
+readonly class OnPlayerUpdated
 {
     public function __construct(
-        private PlayerRepository $playerRepository,
-        private ValidatorInterface $validator,
         private EntityManagerInterface $entityManager,
+        private ValidatorInterface $validator,
+        private PlayerRepository $playerRepository,
     ) {
     }
 
     /**
      * @throws \Exception
      */
-    public function __invoke(PlayerCreatedEvent $event): void
+    public function onPlayerUpdated(PlayerUpdatedEvent $event): void
     {
         try {
             $this->entityManager->beginTransaction();
@@ -37,8 +36,6 @@ readonly class OnPlayerCreated
             }
 
             $this->playerRepository->save($event->player);
-
-            GlobalValuesBag::getInstance()->set('player_id', $event->player->getId());
 
             $this->entityManager->commit();
         } catch (\Exception $exception) {

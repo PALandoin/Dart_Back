@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functionnal\Player\Controller;
+namespace App\Tests\Functional\Player\Controller;
 
 use App\Player\Infrastructure\Doctrine\Factory\PlayerFactory;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -34,8 +34,8 @@ class CreatePlayerControllerTest extends KernelTestCase
             ->assertHas('data')
             ->assertHas('data.id')
             ->assertHas('data.name')
-            ->assertThat('message', fn(Json $message) => $message->equals('Player successfully created'))
-            ->assertThat('data.name', fn(Json $name) => $name->equals('Florian le gros bébé'));
+            ->assertThat('message', fn (Json $message) => $message->equals('Player successfully created'))
+            ->assertThat('data.name', fn (Json $name) => $name->equals('Florian le gros bébé'));
 
         $players = PlayerFactory::all();
 
@@ -58,8 +58,8 @@ class CreatePlayerControllerTest extends KernelTestCase
         $response->assertHas('message')
             ->assertHas('data')
             ->assertHas('data.name')
-            ->assertThat('message', fn(Json $message) => $message->equals('Validation error'))
-            ->assertThat('data.name', fn(Json $name) => $name->equals('This value should be of type string.'));
+            ->assertThat('message', fn (Json $message) => $message->equals('Validation error'))
+            ->assertThat('data.name', fn (Json $name) => $name->equals('This value should be of type string.'));
 
         $players = PlayerFactory::all();
 
@@ -86,8 +86,8 @@ class CreatePlayerControllerTest extends KernelTestCase
         $response->assertHas('message')
             ->assertHas('data')
             ->assertHas('data.name')
-            ->assertThat('message', fn(Json $message) => $message->equals('Validation error'))
-            ->assertThat('data.name', fn(Json $name) => $name->equals('This value should not be blank.'));
+            ->assertThat('message', fn (Json $message) => $message->equals('Validation error'))
+            ->assertThat('data.name', fn (Json $name) => $name->equals('This value should not be blank.'));
 
         $players = PlayerFactory::all();
 
@@ -114,7 +114,7 @@ class CreatePlayerControllerTest extends KernelTestCase
             ->json();
 
         $response->assertHas('message')
-            ->assertThat('message', fn(Json $message) => $message->contains('This value is already used'));
+            ->assertThat('message', fn (Json $message) => $message->contains('This value is already used'));
 
         $players = PlayerFactory::all();
 

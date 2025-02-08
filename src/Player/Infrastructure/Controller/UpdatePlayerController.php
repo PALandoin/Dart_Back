@@ -2,20 +2,18 @@
 
 namespace App\Player\Infrastructure\Controller;
 
-use App\Player\Application\Command\CreatePlayer\CreatePlayer;
+use App\Player\Application\Command\UpdatePlayer\UpdatePlayer;
 use App\Player\Application\Query\ReadPlayer\ReadPlayer;
 use App\Shared\Infrastructure\Bus\Command\MessengerCommandBus;
 use App\Shared\Infrastructure\Bus\Query\MessengerQueryBus;
-use App\Shared\Infrastructure\Service\GlobalValuesBag;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[AsController]
-#[Route('', name: 'create', methods: ['POST'])]
-readonly class CreatePlayerController
+#[Route('/{id}', name: 'update', methods: ['PATCH'])]
+readonly class UpdatePlayerController
 {
     public function __construct(
         private MessengerCommandBus $commandBus,
@@ -23,19 +21,16 @@ readonly class CreatePlayerController
     ) {
     }
 
-    public function __invoke(#[MapRequestPayload] CreatePlayer $createPlayer, Request $request): JsonResponse
+    public function __invoke(#[MapRequestPayload] UpdatePlayer $updatePlayer, int $id): JsonResponse
     {
         try {
-            $this->commandBus->dispatch($createPlayer);
+            $updatePlayer->id = $id;
+            $this->commandBus->dispatch($updatePlayer);
 
-            $playerId = GlobalValuesBag::getInstance()->get('player_id');
-
-            assert(is_int($playerId));
-
-            $getPlayer = new ReadPlayer($playerId);
+            $getPlayer = new ReadPlayer($id);
             $player = $this->queryBus->ask($getPlayer);
 
-            return new JsonResponse(['message' => 'Player successfully created', 'data' => $player], 201);
+            return new JsonResponse(['message' => 'Player successfully updated', 'data' => $player], 200);
         } catch (\Throwable $e) {
             return new JsonResponse(['message' => $e->getMessage()], $e->getCode() < 100 ? 500 : $e->getCode());
         }

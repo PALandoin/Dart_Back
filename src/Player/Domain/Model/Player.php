@@ -23,6 +23,11 @@ class Player implements Model
         return new self($name);
     }
 
+    public function update(string $name): void
+    {
+        $this->name = $name;
+    }
+
     public function getId(): int
     {
         return $this->id;

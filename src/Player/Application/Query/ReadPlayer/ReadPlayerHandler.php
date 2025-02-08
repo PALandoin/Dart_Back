@@ -4,6 +4,7 @@ namespace App\Player\Application\Query\ReadPlayer;
 
 use App\Player\Application\Query\PlayerResponse;
 use App\Player\Domain\Event\PlayerRequestedEvent;
+use App\Player\Domain\Model\Player;
 use App\Player\Domain\Repository\PlayerRepository;
 use App\Shared\Domain\Bus\Query\QueryHandler;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -27,8 +28,9 @@ readonly class ReadPlayerHandler implements QueryHandler
 
         $this->eventDispatcher->dispatch($playerRequestedEvent);
 
-        $model = $this->playerRepository->find($readPlayer->id);
+        /** @var Player $player */
+        $player = $this->playerRepository->find($readPlayer->id);
 
-        return PlayerResponse::fromModel($model);
+        return PlayerResponse::fromModel($player);
     }
 }

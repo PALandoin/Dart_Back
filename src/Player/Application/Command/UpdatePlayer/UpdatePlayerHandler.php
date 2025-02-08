@@ -4,6 +4,7 @@ namespace App\Player\Application\Command\UpdatePlayer;
 
 use App\Player\Domain\Event\PlayerRequestedEvent;
 use App\Player\Domain\Event\PlayerUpdatedEvent;
+use App\Player\Domain\Model\Player;
 use App\Player\Infrastructure\Doctrine\Repository\PlayerRepository;
 use App\Shared\Domain\Bus\Command\CommandHandler;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -24,6 +25,7 @@ readonly class UpdatePlayerHandler implements CommandHandler
 
         $this->eventDispatcher->dispatch($playerRequestedEvent);
 
+        /** @var Player $player */
         $player = $this->playerRepository->find($updatePlayer->id);
 
         $player->update($updatePlayer->name);

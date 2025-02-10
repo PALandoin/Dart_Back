@@ -20,5 +20,7 @@
                 </inverse-join-columns>
             </join-table>
         </many-to-many>
+
+        <one-to-many field="scorings" target-entity="App\Scoring\Domain\Model\Scoring" mapped-by="game"/>
     </entity>
 </doctrine-mapping>

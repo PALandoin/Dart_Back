@@ -4,6 +4,7 @@ namespace App\Game\Domain\Model;
 
 use App\Game\Domain\Model\Enum\GameStatus;
 use App\Player\Domain\Model\Player;
+use App\Scoring\Domain\Model\Scoring;
 use App\Shared\Domain\Model\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -22,9 +23,15 @@ class Game implements Model
 
     private GameStatus $status = GameStatus::CREATED;
 
+    /**
+     * @var Collection<int, Scoring>
+     */
+    private Collection $scorings;
+
     public function __construct()
     {
         $this->players = new ArrayCollection();
+        $this->scorings = new ArrayCollection();
     }
 
     /**
@@ -77,5 +84,41 @@ class Game implements Model
         $this->players->removeElement($player);
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Scoring>
+     */
+    public function getScorings(): Collection
+    {
+        return $this->scorings;
+    }
+
+    public function addScoring(Scoring $scoring): self
+    {
+        $this->scorings->add($scoring);
+
+        return $this;
+    }
+
+    public function removeScoring(Scoring $scoring): self
+    {
+        $this->scorings->removeElement($scoring);
+
+        return $this;
+    }
+
+    public function getPlayerScore(Player $player): int
+    {
+        $score = 0;
+        foreach ($this->scorings as $scoring) {
+            if ($scoring->getPlayer() === $player) {
+                foreach ($scoring->getDartThrows() as $dartThrow) {
+                    $score += $dartThrow->getScore();
+                }
+            }
+        }
+
+        return $score;
     }
 }

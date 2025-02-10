@@ -13,5 +13,7 @@
         <unique-constraints>
             <unique-constraint columns="name"/>
         </unique-constraints>
+
+        <one-to-many field="scorings" target-entity="App\Scoring\Domain\Model\Scoring" mapped-by="player"/>
     </entity>
 </doctrine-mapping>

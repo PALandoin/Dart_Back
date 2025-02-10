@@ -2,6 +2,7 @@
 
 namespace App\Player\Domain\Model;
 
+use App\Game\Domain\Model\Game;
 use App\Shared\Domain\Model\Model;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -13,14 +14,19 @@ class Player implements Model
      */
     private int $id;
 
-    public function __construct(
-        private string $name,
-    ) {
-    }
+    private string $name;
+
+    /**
+     * @var Game[]
+     */
+    private array $games;
 
     public static function register(string $name): self
     {
-        return new self($name);
+        $player = new self();
+        $player->setName($name);
+
+        return $player;
     }
 
     public function update(string $name): void
@@ -38,8 +44,25 @@ class Player implements Model
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Game[]
+     */
+    public function getGames(): array
+    {
+        return $this->games;
+    }
+
+    public function addGame(Game $game): self
+    {
+        $this->games[] = $game;
+
+        return $this;
     }
 }

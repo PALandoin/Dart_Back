@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Functional\Player\Controller;
+namespace App\Tests\Functional\Player\Infrastructure\Controller;
 
 use App\Player\Infrastructure\Doctrine\Factory\PlayerFactory;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -20,7 +20,7 @@ class ReadPlayerControllerTest extends KernelTestCase
         $player = PlayerFactory::createOne(['name' => 'Florian']);
 
         $response = $this->browser()
-            ->request('GET', "api/players/{$player->getId()}")
+            ->get("api/players/{$player->getId()}")
             ->assertStatus(200)
             ->json();
 
@@ -35,11 +35,11 @@ class ReadPlayerControllerTest extends KernelTestCase
     public function testPlayerCannotBeReadWithInvalidId(): void
     {
         $response = $this->browser()
-            ->request('GET', 'api/players/999')
+            ->get('api/players/999')
             ->assertStatus(404)
             ->json();
 
         $response->assertHas('message')
-            ->assertThat('message', fn (Json $message) => $message->equals('Handling "App\Player\Application\Query\ReadPlayer\ReadPlayer" failed: Player not found'));
+            ->assertThat('message', fn (Json $message) => $message->equals('Handling "App\Player\Application\Query\ReadPlayer\ReadPlayer" failed: Player with id 999 not found'));
     }
 }

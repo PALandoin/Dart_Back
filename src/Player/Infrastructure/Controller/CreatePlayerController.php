@@ -3,10 +3,13 @@
 namespace App\Player\Infrastructure\Controller;
 
 use App\Player\Application\Command\CreatePlayer\CreatePlayer;
+use App\Player\Application\Query\PlayerResponse;
 use App\Player\Application\Query\ReadPlayer\ReadPlayer;
-use App\Shared\Infrastructure\Bus\Command\MessengerCommandBus;
-use App\Shared\Infrastructure\Bus\Query\MessengerQueryBus;
+use App\Shared\Domain\Bus\Command\CommandBus;
+use App\Shared\Domain\Bus\Query\QueryBus;
 use App\Shared\Infrastructure\Service\GlobalValuesBag;
+use Nelmio\ApiDocBundle\Attribute\Model;
+use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
@@ -14,12 +17,27 @@ use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[AsController]
-#[Route('', name: 'create', methods: ['POST'])]
+#[Route('', name: 'create', methods: ['POST'], format: 'json')]
+#[OA\Tag(name: 'Player')]
+#[OA\Post(
+    responses: [
+        new OA\Response(
+            response: 201,
+            description: 'Player successfully created',
+            content: new OA\JsonContent(
+                properties: [
+                    new OA\Property(property: 'message', type: 'string', example: 'Player successfully created'),
+                    new OA\Property(property: 'data', ref: new Model(type: PlayerResponse::class)),
+                ],
+            )
+        ),
+    ]
+)]
 readonly class CreatePlayerController
 {
     public function __construct(
-        private MessengerCommandBus $commandBus,
-        private MessengerQueryBus $queryBus,
+        private CommandBus $commandBus,
+        private QueryBus $queryBus,
     ) {
     }
 
@@ -29,6 +47,7 @@ readonly class CreatePlayerController
             $this->commandBus->dispatch($createPlayer);
 
             $playerId = GlobalValuesBag::getInstance()->get('player_id');
+            GlobalValuesBag::getInstance()->remove('player_id');
 
             assert(is_int($playerId));
 

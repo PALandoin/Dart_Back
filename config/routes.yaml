@@ -5,6 +5,7 @@ games:
     type: attribute
     prefix: api/games
     trailing_slash_on_root: false
+    name_prefix: api_games_
 players:
     resource:
         path: ../src/Player/Infrastructure/Controller
@@ -12,6 +13,7 @@ players:
     type: attribute
     prefix: api/players
     trailing_slash_on_root: false
+    name_prefix: api_players_
 scoring:
     resource:
         path: ../src/Scoring/Infrastructure/Controller
@@ -19,3 +21,4 @@ scoring:
     type: attribute
     prefix: api/scoring
     trailing_slash_on_root: false
+    name_prefix: api_scoring_

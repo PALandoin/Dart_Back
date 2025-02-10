@@ -20,7 +20,7 @@ readonly class OnPlayerRequested
         $player = $this->playerRepository->find($event->id);
 
         if (null === $player) {
-            throw new NotFoundHttpException('Player not found', code: 404);
+            throw new NotFoundHttpException('Player with id '.$event->id.' not found', code: 404);
         }
     }
 }

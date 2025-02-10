@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Player\Infrastructure\Doctrine\Factory;
+namespace App\Game\Infrastructure\Doctrine\Factory;
 
-use App\Player\Domain\Model\Player;
+use App\Game\Domain\Model\Enum\GameStatus;
+use App\Game\Domain\Model\Game;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<Player>
+ * @extends PersistentProxyObjectFactory<Game>
  */
-final class PlayerFactory extends PersistentProxyObjectFactory
+final class GameFactory extends PersistentProxyObjectFactory
 {
     public function __construct()
     {
@@ -16,16 +17,16 @@ final class PlayerFactory extends PersistentProxyObjectFactory
 
     public static function class(): string
     {
-        return Player::class;
+        return Game::class;
     }
 
     /**
-     * @return array<string,mixed>
+     * @return array<string, mixed>
      */
     protected function defaults(): array
     {
         return [
-            'name' => self::faker()->text(255),
+            'status' => self::faker()->randomElement(GameStatus::cases()),
         ];
     }
 
@@ -34,7 +35,8 @@ final class PlayerFactory extends PersistentProxyObjectFactory
      */
     protected function initialize(): static
     {
-        return $this// ->afterInstantiate(function(Player $player): void {})
+        return $this
+            // ->afterInstantiate(function(Game $game): void {})
         ;
     }
 }

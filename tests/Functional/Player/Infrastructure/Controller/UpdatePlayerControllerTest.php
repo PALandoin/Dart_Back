@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Functional\Player\Controller;
+namespace App\Tests\Functional\Player\Infrastructure\Controller;
 
 use App\Player\Infrastructure\Doctrine\Factory\PlayerFactory;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -20,7 +20,7 @@ class UpdatePlayerControllerTest extends KernelTestCase
         $player = PlayerFactory::createOne(['name' => 'Florian']);
 
         $response = $this->browser()
-            ->request('PATCH', "api/players/{$player->getId()}",
+            ->patch("api/players/{$player->getId()}",
                 [
                     'json' => [
                         'name' => 'Florian le gros bébé',
@@ -47,7 +47,7 @@ class UpdatePlayerControllerTest extends KernelTestCase
         $player = PlayerFactory::createOne(['name' => 'Florian']);
 
         $response = $this->browser()
-            ->request('PATCH', "api/players/{$player->getId()}",
+            ->patch("api/players/{$player->getId()}",
                 [
                     'json' => [
                         'name' => '',
@@ -69,7 +69,7 @@ class UpdatePlayerControllerTest extends KernelTestCase
         $player = PlayerFactory::createOne(['name' => 'Florian']);
 
         $response = $this->browser()
-            ->request('PATCH', "api/players/{$player->getId()}",
+            ->patch("api/players/{$player->getId()}",
                 [
                     'json' => [
                     ],
@@ -90,7 +90,7 @@ class UpdatePlayerControllerTest extends KernelTestCase
         $player = PlayerFactory::createOne(['name' => 'Florian']);
 
         $response = $this->browser()
-            ->request('PATCH', "api/players/{$player->getId()}",
+            ->patch("api/players/{$player->getId()}",
                 [
                     'json' => [
                         'name' => null,
@@ -113,7 +113,7 @@ class UpdatePlayerControllerTest extends KernelTestCase
         $player = PlayerFactory::createOne(['name' => 'Florian']);
 
         $response = $this->browser()
-            ->request('PATCH', "api/players/{$player->getId()}",
+            ->patch("api/players/{$player->getId()}",
                 [
                     'json' => [
                         'name' => 'Florian le gros bébé',
@@ -130,7 +130,7 @@ class UpdatePlayerControllerTest extends KernelTestCase
     public function testPlayerCannotBeUpdatedWithNoPlayer(): void
     {
         $response = $this->browser()
-            ->request('PATCH', 'api/players/1',
+            ->patch('api/players/1',
                 [
                     'json' => [
                         'name' => 'Florian le gros bébé',
@@ -141,6 +141,6 @@ class UpdatePlayerControllerTest extends KernelTestCase
             ->json();
 
         $response->assertHas('message')
-            ->assertThat('message', fn (Json $message) => $message->equals('Handling "App\Player\Application\Command\UpdatePlayer\UpdatePlayer" failed: Player not found'));
+            ->assertThat('message', fn (Json $message) => $message->equals('Handling "App\Player\Application\Command\UpdatePlayer\UpdatePlayer" failed: Player with id 1 not found'));
     }
 }

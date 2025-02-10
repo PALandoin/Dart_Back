@@ -3,10 +3,11 @@
 namespace App\Shared\Infrastructure\Bus\Query;
 
 use App\Shared\Domain\Bus\Query\Query;
+use App\Shared\Domain\Bus\Query\QueryBus;
 use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-final class MessengerQueryBus
+final class MessengerQueryBus implements QueryBus
 {
     use HandleTrait {
         handle as handleQuery;

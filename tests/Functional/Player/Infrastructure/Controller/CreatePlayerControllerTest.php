@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Player\Controller;
+namespace App\Tests\Functional\Player\Infrastructure\Controller;
 
 use App\Player\Infrastructure\Doctrine\Factory\PlayerFactory;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -20,7 +20,7 @@ class CreatePlayerControllerTest extends KernelTestCase
     public function testPlayerCanBeCreated(): void
     {
         $response = $this->browser()
-            ->request('POST', 'api/players',
+            ->post('api/players',
                 [
                     'json' => [
                         'name' => 'Florian le gros bébé',
@@ -45,7 +45,7 @@ class CreatePlayerControllerTest extends KernelTestCase
     public function testPlayerCannotBeCreatedWithNullName(): void
     {
         $response = $this->browser()
-            ->request('POST', 'api/players',
+            ->post('api/players',
                 [
                     'json' => [
                         'name' => null,
@@ -69,7 +69,7 @@ class CreatePlayerControllerTest extends KernelTestCase
     public function testPlayerCannotBeCreatedWithEmptyName(): void
     {
         $response = $this->browser()
-            ->request('POST', 'api/players',
+            ->post('api/players',
                 [
                     'json' => [
                         'name' => '',
@@ -99,7 +99,7 @@ class CreatePlayerControllerTest extends KernelTestCase
         PlayerFactory::createOne(['name' => 'Florian le gros bébé']);
 
         $response = $this->browser()
-            ->request('POST', 'api/players',
+            ->post('api/players',
                 [
                     'json' => [
                         'name' => 'Florian le gros bébé',

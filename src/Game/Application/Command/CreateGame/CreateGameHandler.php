@@ -5,6 +5,7 @@ namespace App\Game\Application\Command\CreateGame;
 use App\Game\Domain\Event\GameCreatedEvent;
 use App\Game\Domain\Model\Game;
 use App\Player\Domain\Event\PlayerRequestedEvent;
+use App\Player\Domain\Model\Player;
 use App\Player\Domain\Repository\PlayerRepository;
 use App\Shared\Domain\Bus\Command\CommandHandler;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -27,7 +28,10 @@ readonly class CreateGameHandler implements CommandHandler
 
             $this->eventDispatcher->dispatch($playerRequestedEvent);
 
-            $playerModels[] = $this->playerRepository->find($player);
+            /** @var Player $player */
+            $player = $this->playerRepository->find($player);
+
+            $playerModels[] = $player;
         }
 
         $game = Game::create($playerModels);

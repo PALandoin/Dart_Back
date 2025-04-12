@@ -10,7 +10,7 @@
   <component name="MessDetector">
     <phpmd_settings>
       <phpmd_by_interpreter interpreter_id="1e659843-435a-46e5-91c6-79d322c237b1" tool_path="/app/vendor/bin/phpmd" timeout="30000" />
-      <phpmd_by_interpreter asDefaultInterpreter="true" deletedFromTheList="true" interpreter_id="1e659843-435a-46e5-91c6-79d322c237b1" tool_path="/Users/pierre-arnaudlandoin/Projet/Perso/Dart_Back/vendor/bin/phpmd" timeout="30000" />
+      <phpmd_by_interpreter asDefaultInterpreter="true" deletedFromTheList="true" interpreter_id="1e659843-435a-46e5-91c6-79d322c237b1" tool_path="/app/vendor/bin/phpmd" timeout="30000" />
       <MessDetectorConfiguration deletedFromTheList="true" tool_path="$PROJECT_DIR$/vendor/bin/phpmd" />
     </phpmd_settings>
   </component>
@@ -181,6 +181,7 @@
       <path value="$PROJECT_DIR$/vendor/mtdowling/jmespath.php" />
       <path value="$PROJECT_DIR$/vendor/pdepend/pdepend" />
       <path value="$PROJECT_DIR$/vendor/phpmd/phpmd" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php84" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
@@ -266,6 +267,11 @@
   <component name="PhpStanOptionsConfiguration">
     <option name="config" value="$PROJECT_DIR$/phpstan.dist.neon" />
     <option name="transferred" value="true" />
+  </component>
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <phpunit_by_interpreter interpreter_id="1e659843-435a-46e5-91c6-79d322c237b1" custom_loader_path="/app/vendor/autoload.php" phpunit_phar_path="" />
+    </phpunit_settings>
   </component>
   <component name="Psalm">
     <Psalm_settings>

@@ -4,101 +4,8 @@
     "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
     "This file is @generated automatically"
   ],
-  "content-hash": "7adefd7fd661958536a1f12f69ca37b0",
+  "content-hash": "616b5768109a8006e10993b7931ebb77",
   "packages": [
-    {
-      "name": "doctrine/cache",
-      "version": "2.2.0",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/doctrine/cache.git",
-        "reference": "1ca8f21980e770095a31456042471a57bc4c68fb"
-      },
-      "dist": {
-        "type": "zip",
-        "url": "https://api.github.com/repos/doctrine/cache/zipball/1ca8f21980e770095a31456042471a57bc4c68fb",
-        "reference": "1ca8f21980e770095a31456042471a57bc4c68fb",
-        "shasum": ""
-      },
-      "require": {
-        "php": "~7.1 || ^8.0"
-      },
-      "conflict": {
-        "doctrine/common": ">2.2,<2.4"
-      },
-      "require-dev": {
-        "cache/integration-tests": "dev-master",
-        "doctrine/coding-standard": "^9",
-        "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
-        "psr/cache": "^1.0 || ^2.0 || ^3.0",
-        "symfony/cache": "^4.4 || ^5.4 || ^6",
-        "symfony/var-exporter": "^4.4 || ^5.4 || ^6"
-      },
-      "type": "library",
-      "autoload": {
-        "psr-4": {
-          "Doctrine\\Common\\Cache\\": "lib/Doctrine/Common/Cache"
-        }
-      },
-      "notification-url": "https://packagist.org/downloads/",
-      "license": [
-        "MIT"
-      ],
-      "authors": [
-        {
-          "name": "Guilherme Blanco",
-          "email": "guilhermeblanco@gmail.com"
-        },
-        {
-          "name": "Roman Borschel",
-          "email": "roman@code-factory.org"
-        },
-        {
-          "name": "Benjamin Eberlei",
-          "email": "kontakt@beberlei.de"
-        },
-        {
-          "name": "Jonathan Wage",
-          "email": "jonwage@gmail.com"
-        },
-        {
-          "name": "Johannes Schmitt",
-          "email": "schmittjoh@gmail.com"
-        }
-      ],
-      "description": "PHP Doctrine Cache library is a popular cache implementation that supports many different drivers such as redis, memcache, apc, mongodb and others.",
-      "homepage": "https://www.doctrine-project.org/projects/cache.html",
-      "keywords": [
-        "abstraction",
-        "apcu",
-        "cache",
-        "caching",
-        "couchdb",
-        "memcached",
-        "php",
-        "redis",
-        "xcache"
-      ],
-      "support": {
-        "issues": "https://github.com/doctrine/cache/issues",
-        "source": "https://github.com/doctrine/cache/tree/2.2.0"
-      },
-      "funding": [
-        {
-          "url": "https://www.doctrine-project.org/sponsorship.html",
-          "type": "custom"
-        },
-        {
-          "url": "https://www.patreon.com/phpdoctrine",
-          "type": "patreon"
-        },
-        {
-          "url": "https://tidelift.com/funding/github/packagist/doctrine%2Fcache",
-          "type": "tidelift"
-        }
-      ],
-      "time": "2022-05-20T20:07:39+00:00"
-    },
     {
       "name": "doctrine/collections",
       "version": "2.3.0",
@@ -187,45 +94,40 @@
     },
     {
       "name": "doctrine/dbal",
-      "version": "3.9.4",
+      "version": "4.2.3",
       "source": {
         "type": "git",
         "url": "https://github.com/doctrine/dbal.git",
-        "reference": "ec16c82f20be1a7224e65ac67144a29199f87959"
+        "reference": "33d2d7fe1269b2301640c44cf2896ea607b30e3e"
       },
       "dist": {
         "type": "zip",
-        "url": "https://api.github.com/repos/doctrine/dbal/zipball/ec16c82f20be1a7224e65ac67144a29199f87959",
-        "reference": "ec16c82f20be1a7224e65ac67144a29199f87959",
+        "url": "https://api.github.com/repos/doctrine/dbal/zipball/33d2d7fe1269b2301640c44cf2896ea607b30e3e",
+        "reference": "33d2d7fe1269b2301640c44cf2896ea607b30e3e",
         "shasum": ""
       },
       "require": {
-        "composer-runtime-api": "^2",
-        "doctrine/cache": "^1.11|^2.0",
         "doctrine/deprecations": "^0.5.3|^1",
-        "doctrine/event-manager": "^1|^2",
-        "php": "^7.4 || ^8.0",
+        "php": "^8.1",
         "psr/cache": "^1|^2|^3",
         "psr/log": "^1|^2|^3"
       },
       "require-dev": {
         "doctrine/coding-standard": "12.0.0",
         "fig/log-test": "^1",
-        "jetbrains/phpstorm-stubs": "2023.1",
+        "jetbrains/phpstorm-stubs": "2023.2",
         "phpstan/phpstan": "2.1.1",
+        "phpstan/phpstan-phpunit": "2.0.3",
         "phpstan/phpstan-strict-rules": "^2",
-        "phpunit/phpunit": "9.6.22",
+        "phpunit/phpunit": "10.5.39",
         "slevomat/coding-standard": "8.13.1",
         "squizlabs/php_codesniffer": "3.10.2",
-        "symfony/cache": "^5.4|^6.0|^7.0",
-        "symfony/console": "^4.4|^5.4|^6.0|^7.0"
+        "symfony/cache": "^6.3.8|^7.0",
+        "symfony/console": "^5.4|^6.3|^7.0"
       },
       "suggest": {
         "symfony/console": "For helpful console commands such as SQL execution and import of files."
       },
-      "bin": [
-        "bin/doctrine-dbal"
-      ],
       "type": "library",
       "autoload": {
         "psr-4": {
@@ -278,7 +180,7 @@
       ],
       "support": {
         "issues": "https://github.com/doctrine/dbal/issues",
-        "source": "https://github.com/doctrine/dbal/tree/3.9.4"
+        "source": "https://github.com/doctrine/dbal/tree/4.2.3"
       },
       "funding": [
         {
@@ -294,7 +196,7 @@
           "type": "tidelift"
         }
       ],
-      "time": "2025-01-16T08:28:55+00:00"
+      "time": "2025-03-07T18:29:05+00:00"
     },
     {
       "name": "doctrine/deprecations",
@@ -1226,74 +1128,72 @@
     },
     {
       "name": "nelmio/api-doc-bundle",
-      "version": "v4.38.2",
+      "version": "v5.0.1",
       "source": {
         "type": "git",
         "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-        "reference": "fdc1cf5bc57287787db59f205a8e77485bd22072"
+        "reference": "ede5e66c0016135ca580c94b3cc832310d77cd53"
       },
       "dist": {
         "type": "zip",
-        "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/fdc1cf5bc57287787db59f205a8e77485bd22072",
-        "reference": "fdc1cf5bc57287787db59f205a8e77485bd22072",
+        "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/ede5e66c0016135ca580c94b3cc832310d77cd53",
+        "reference": "ede5e66c0016135ca580c94b3cc832310d77cd53",
         "shasum": ""
       },
       "require": {
         "ext-json": "*",
-        "php": ">=7.4",
-        "phpdocumentor/reflection-docblock": "^4.3.4 || ^5.0",
+        "php": ">=8.1",
+        "phpdocumentor/reflection-docblock": "^5.0",
         "phpdocumentor/type-resolver": "^1.8.2",
         "psr/cache": "^1.0 || ^2.0 || ^3.0",
         "psr/container": "^1.0 || ^2.0",
         "psr/log": "^1.0 || ^2.0 || ^3.0",
-        "symfony/config": "^5.4 || ^6.4 || ^7.1",
-        "symfony/console": "^5.4 || ^6.4 || ^7.1",
-        "symfony/dependency-injection": "^5.4 || ^6.4 || ^7.1",
+        "symfony/config": "^6.4 || ^7.1",
+        "symfony/console": "^6.4 || ^7.1",
+        "symfony/dependency-injection": "^6.4 || ^7.1",
         "symfony/deprecation-contracts": "^2.1 || ^3",
-        "symfony/framework-bundle": "^5.4.24 || ^6.4 || ^7.1",
-        "symfony/http-foundation": "^5.4 || ^6.4 || ^7.1",
-        "symfony/http-kernel": "^5.4 || ^6.4 || ^7.1",
-        "symfony/options-resolver": "^5.4 || ^6.4 || ^7.1",
-        "symfony/property-info": "^5.4.10 || ^6.4 || ^7.1",
-        "symfony/routing": "^5.4 || ^6.4 || ^7.1",
+        "symfony/framework-bundle": "^6.4 || ^7.1",
+        "symfony/http-foundation": "^6.4 || ^7.1",
+        "symfony/http-kernel": "^6.4 || ^7.1",
+        "symfony/options-resolver": "^6.4 || ^7.1",
+        "symfony/property-info": "^6.4 || ^7.1",
+        "symfony/routing": "^6.4 || ^7.1",
         "zircote/swagger-php": "^4.11.1 || ^5.0"
       },
       "conflict": {
         "zircote/swagger-php": "4.8.7"
       },
       "require-dev": {
-        "api-platform/core": "^2.7.0 || ^3",
-        "composer/package-versions-deprecated": "1.11.99.1",
-        "doctrine/annotations": "^2.0",
+        "api-platform/core": "^3.2",
         "friendsofphp/php-cs-fixer": "^3.52",
-        "friendsofsymfony/rest-bundle": "^2.8 || ^3.0",
-        "jms/serializer": "^1.14 || ^3.0",
-        "jms/serializer-bundle": "^2.3 || ^3.0 || ^4.0 || ^5.0",
+        "friendsofsymfony/rest-bundle": "^3.2.0",
+        "jms/serializer": "^3.32",
+        "jms/serializer-bundle": "^5.5",
         "phpstan/phpstan": "^1.10",
         "phpstan/phpstan-phpunit": "^1.3",
         "phpstan/phpstan-strict-rules": "^1.5",
         "phpstan/phpstan-symfony": "^1.3",
-        "phpunit/phpunit": "^9.6 || ^10.5",
-        "symfony/asset": "^5.4 || ^6.4 || ^7.1",
-        "symfony/browser-kit": "^5.4 || ^6.4 || ^7.1",
-        "symfony/cache": "^5.4 || ^6.4 || ^7.1",
-        "symfony/dom-crawler": "^5.4 || ^6.4 || ^7.1",
-        "symfony/expression-language": "^5.4 || ^6.4 || ^7.1",
-        "symfony/form": "^5.4 || ^6.4 || ^7.1",
-        "symfony/phpunit-bridge": "^6.4",
-        "symfony/property-access": "^5.4 || ^6.4 || ^7.1",
-        "symfony/security-csrf": "^5.4 || ^6.4 || ^7.1",
-        "symfony/serializer": "^5.4 || ^6.4 || ^7.1",
-        "symfony/stopwatch": "^5.4 || ^6.4 || ^7.1",
-        "symfony/templating": "^5.4 || ^6.4 || ^7.1",
-        "symfony/twig-bundle": "^5.4 || ^6.4 || ^7.1",
-        "symfony/uid": "^5.4 || ^6.4 || ^7.1",
-        "symfony/validator": "^5.4 || ^6.4 || ^7.1",
-        "willdurand/hateoas-bundle": "^1.0 || ^2.0"
+        "phpunit/phpunit": "^10.5",
+        "symfony/asset": "^6.4 || ^7.1",
+        "symfony/browser-kit": "^6.4 || ^7.1",
+        "symfony/cache": "^6.4 || ^7.1",
+        "symfony/dom-crawler": "^6.4 || ^7.1",
+        "symfony/expression-language": "^6.4 || ^7.1",
+        "symfony/form": "^6.4 || ^7.1",
+        "symfony/phpunit-bridge": "^6.4 || ^7.1",
+        "symfony/property-access": "^6.4 || ^7.1",
+        "symfony/security-csrf": "^6.4 || ^7.1",
+        "symfony/serializer": "^6.4 || ^7.1",
+        "symfony/stopwatch": "^6.4 || ^7.1",
+        "symfony/templating": "^6.4 || ^7.1",
+        "symfony/twig-bundle": "^6.4 || ^7.1",
+        "symfony/uid": "^6.4 || ^7.1",
+        "symfony/validator": "^6.4 || ^7.1",
+        "willdurand/hateoas-bundle": "^2.7",
+        "willdurand/negotiation": "^3.0"
       },
       "suggest": {
         "api-platform/core": "For using an API oriented framework.",
-        "doctrine/annotations": "For using doctrine annotations",
         "friendsofsymfony/rest-bundle": "For using the parameters annotations.",
         "jms/serializer-bundle": "For describing your models.",
         "symfony/asset": "For using the Swagger UI.",
@@ -1309,7 +1209,8 @@
       "type": "symfony-bundle",
       "extra": {
         "branch-alias": {
-          "dev-4.x": "4.x-dev"
+          "dev-4.x": "4.x-dev",
+          "dev-5.x": "5.x-dev"
         }
       },
       "autoload": {
@@ -1327,7 +1228,7 @@
           "homepage": "https://github.com/nelmio/NelmioApiDocBundle/contributors"
         }
       ],
-      "description": "Generates documentation for your REST API from annotations and attributes",
+      "description": "Generates documentation for your REST API from attributes",
       "keywords": [
         "api",
         "doc",
@@ -1336,7 +1237,7 @@
       ],
       "support": {
         "issues": "https://github.com/nelmio/NelmioApiDocBundle/issues",
-        "source": "https://github.com/nelmio/NelmioApiDocBundle/tree/v4.38.2"
+        "source": "https://github.com/nelmio/NelmioApiDocBundle/tree/v5.0.1"
       },
       "funding": [
         {
@@ -1344,7 +1245,7 @@
           "type": "github"
         }
       ],
-      "time": "2025-03-24T15:00:53+00:00"
+      "time": "2025-03-24T15:14:41+00:00"
     },
     {
       "name": "nikic/php-parser",

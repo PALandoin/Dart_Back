@@ -20,12 +20,13 @@ class CreatePlayerControllerTest extends KernelTestCase
     public function testPlayerCanBeCreated(): void
     {
         $response = $this->browser()
-            ->post('api/players',
+            ->post(
+                'api/players',
                 [
                     'json' => [
                         'name' => 'Florian le gros bébé',
                     ],
-                ]
+                ],
             )
             ->assertStatus(201)
             ->json();
@@ -39,18 +40,19 @@ class CreatePlayerControllerTest extends KernelTestCase
 
         $players = PlayerFactory::all();
 
-        $this->assertCount(1, $players);
+        self::assertCount(1, $players);
     }
 
     public function testPlayerCannotBeCreatedWithNullName(): void
     {
         $response = $this->browser()
-            ->post('api/players',
+            ->post(
+                'api/players',
                 [
                     'json' => [
                         'name' => null,
                     ],
-                ]
+                ],
             )
             ->assertStatus(422)
             ->json();
@@ -63,13 +65,14 @@ class CreatePlayerControllerTest extends KernelTestCase
 
         $players = PlayerFactory::all();
 
-        $this->assertCount(0, $players);
+        self::assertCount(0, $players);
     }
 
     public function testPlayerCannotBeCreatedWithEmptyName(): void
     {
         $response = $this->browser()
-            ->post('api/players',
+            ->post(
+                'api/players',
                 [
                     'json' => [
                         'name' => '',
@@ -78,7 +81,7 @@ class CreatePlayerControllerTest extends KernelTestCase
                         'Content-Type' => 'application/json',
                         'Language' => 'fr',
                     ],
-                ]
+                ],
             )
             ->assertStatus(422)
             ->json();
@@ -91,7 +94,7 @@ class CreatePlayerControllerTest extends KernelTestCase
 
         $players = PlayerFactory::all();
 
-        $this->assertCount(0, $players);
+        self::assertCount(0, $players);
     }
 
     public function testPlayerCannotBeCreatedWithAlreadyExistingName(): void
@@ -99,7 +102,8 @@ class CreatePlayerControllerTest extends KernelTestCase
         PlayerFactory::createOne(['name' => 'Florian le gros bébé']);
 
         $response = $this->browser()
-            ->post('api/players',
+            ->post(
+                'api/players',
                 [
                     'json' => [
                         'name' => 'Florian le gros bébé',
@@ -108,7 +112,7 @@ class CreatePlayerControllerTest extends KernelTestCase
                         'Content-Type' => 'application/json',
                         'Language' => 'fr',
                     ],
-                ]
+                ],
             )
             ->assertStatus(422)
             ->json();
@@ -118,6 +122,6 @@ class CreatePlayerControllerTest extends KernelTestCase
 
         $players = PlayerFactory::all();
 
-        $this->assertCount(1, $players);
+        self::assertCount(1, $players);
     }
 }

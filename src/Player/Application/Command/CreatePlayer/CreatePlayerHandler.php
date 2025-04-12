@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Player\Application\Command\CreatePlayer;
 
 use App\Player\Domain\Event\PlayerCreatedEvent;

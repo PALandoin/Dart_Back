@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Player\Infrastructure\Controller;
 
 use App\Player\Application\Command\CreatePlayer\CreatePlayer;
@@ -8,12 +10,17 @@ use App\Player\Application\Query\ReadPlayer\ReadPlayer;
 use App\Shared\Domain\Bus\Command\CommandBus;
 use App\Shared\Domain\Bus\Query\QueryBus;
 use App\Shared\Infrastructure\Service\GlobalValuesBag;
+
+use function assert;
+use function is_int;
+
 use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
+use Throwable;
 
 #[AsController]
 #[Route('', name: 'create', methods: ['POST'], format: 'json')]
@@ -28,9 +35,9 @@ use Symfony\Component\Routing\Attribute\Route;
                     new OA\Property(property: 'message', type: 'string', example: 'Player successfully created'),
                     new OA\Property(property: 'data', ref: new Model(type: PlayerResponse::class)),
                 ],
-            )
+            ),
         ),
-    ]
+    ],
 )]
 readonly class CreatePlayerController
 {
@@ -54,7 +61,7 @@ readonly class CreatePlayerController
             $player = $this->queryBus->ask($getPlayer);
 
             return new JsonResponse(['message' => 'Player successfully created', 'data' => $player], 201);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return new JsonResponse(['message' => $e->getMessage()], $e->getCode() < 100 ? 500 : $e->getCode());
         }
     }

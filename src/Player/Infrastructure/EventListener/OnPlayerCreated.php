@@ -1,11 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Player\Infrastructure\EventListener;
 
 use App\Player\Domain\Event\PlayerCreatedEvent;
 use App\Player\Domain\Repository\PlayerRepository;
 use App\Shared\Infrastructure\Service\GlobalValuesBag;
+
+use function count;
+
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -21,7 +27,7 @@ readonly class OnPlayerCreated
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function __invoke(PlayerCreatedEvent $event): void
     {
@@ -41,7 +47,7 @@ readonly class OnPlayerCreated
             GlobalValuesBag::getInstance()->set('player_id', $event->player->getId());
 
             $this->entityManager->commit();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->entityManager->rollback();
             throw $exception;
         }

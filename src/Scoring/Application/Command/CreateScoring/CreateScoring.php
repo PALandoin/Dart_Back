@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Scoring\Application\Command\CreateScoring;
 
 use App\Scoring\Application\Command\Subresource\CreateDartThrow;

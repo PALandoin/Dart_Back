@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Shared\Infrastructure\Service;
 
 class GlobalValuesBag
 {
     private static ?self $instance = null;
-    /** @var array<string, mixed> */
+    /**
+     * @var array<string, mixed>
+     */
     private array $parameters = [];
 
     private function __construct()
@@ -14,7 +18,7 @@ class GlobalValuesBag
 
     public static function getInstance(): self
     {
-        if (null === self::$instance) {
+        if (self::$instance === null) {
             self::$instance = new self();
         }
 

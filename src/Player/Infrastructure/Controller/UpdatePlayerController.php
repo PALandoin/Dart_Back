@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Player\Infrastructure\Controller;
 
 use App\Player\Application\Command\UpdatePlayer\UpdatePlayer;
@@ -13,6 +15,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
+use Throwable;
 
 #[AsController]
 #[Route('/{id}', name: 'update', requirements: ['id' => '\d+'], methods: ['PATCH'], format: 'json')]
@@ -26,7 +29,7 @@ use Symfony\Component\Routing\Attribute\Route;
                 new OA\Property(property: 'message', type: 'string', example: 'Player successfully updated'),
                 new OA\Property(property: 'data', ref: new Model(type: PlayerResponse::class)),
             ],
-        )
+        ),
     ),
 ])]
 readonly class UpdatePlayerController
@@ -47,7 +50,7 @@ readonly class UpdatePlayerController
             $player = $this->queryBus->ask($getPlayer);
 
             return new JsonResponse(['message' => 'Player successfully updated', 'data' => $player], 200);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return new JsonResponse(['message' => $e->getMessage()], $e->getCode() < 100 ? 500 : $e->getCode());
         }
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Scoring\Infrastructure\EventListener;
 
 use App\Scoring\Domain\Event\ScoringRequestedEvent;
@@ -19,7 +21,7 @@ readonly class OnScoringRequested
     {
         $scoring = $this->scoringRepository->find($event->id);
 
-        if (null === $scoring) {
+        if ($scoring === null) {
             throw new NotFoundHttpException('Scoring with id '.$event->id.' not found', code: 404);
         }
     }

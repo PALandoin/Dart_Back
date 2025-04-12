@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Scoring\Infrastructure\Doctrine\Factory;
 
 use App\Game\Infrastructure\Doctrine\Factory\GameFactory;

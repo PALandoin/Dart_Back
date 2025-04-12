@@ -1,12 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Scoring\Infrastructure\EventListener;
 
 use App\Game\Domain\Model\Enum\GameStatus;
 use App\Scoring\Domain\Event\ScoringCreatedEvent;
 use App\Scoring\Domain\Repository\ScoringRepository;
 use App\Shared\Infrastructure\Service\GlobalValuesBag;
+
+use function count;
+
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -34,7 +40,7 @@ readonly class OnScoringCreated
                 throw new UnprocessableEntityHttpException(message: $error, code: 422);
             }
 
-            if (GameStatus::FINISHED === $scoring->getGame()->getStatus()) {
+            if ($scoring->getGame()->getStatus() === GameStatus::FINISHED) {
                 throw new UnprocessableEntityHttpException(message: 'Game is finished', code: 422);
             }
 
@@ -43,7 +49,7 @@ readonly class OnScoringCreated
             GlobalValuesBag::getInstance()->set('scoring_id', $event->scoring->getId());
 
             $this->entityManager->commit();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->entityManager->rollback();
             throw $exception;
         }

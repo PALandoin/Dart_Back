@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Scoring\Domain\Model;
 
 use App\Game\Domain\Model\Game;

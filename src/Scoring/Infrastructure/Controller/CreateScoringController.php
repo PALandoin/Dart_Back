@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Scoring\Infrastructure\Controller;
 
 use App\Scoring\Application\Command\CreateScoring\CreateScoring;
@@ -7,6 +9,13 @@ use App\Scoring\Application\Query\ReadScoring\ReadScoring;
 use App\Shared\Domain\Bus\Command\CommandBus;
 use App\Shared\Domain\Bus\Query\QueryBus;
 use App\Shared\Infrastructure\Service\GlobalValuesBag;
+
+use function assert;
+
+use Exception;
+
+use function is_int;
+
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +36,7 @@ use Symfony\Component\Routing\Attribute\Route;
                     properties: [
                         new OA\Property(property: 'message', type: 'string', example: 'Scoring successfully created'),
                         // new OA\Property(property: 'data', ref: ScoringResponse::class),
-                    ]
+                    ],
                 ),
             ],
         ),
@@ -58,7 +67,7 @@ readonly class CreateScoringController
                 'message' => 'Scoring successfully created',
                 'data' => $scoringResponse,
             ], Response::HTTP_CREATED);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return new JsonResponse(['message' => $e->getMessage()], $e->getCode() < 100 ? 500 : $e->getCode());
         }
     }

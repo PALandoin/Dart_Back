@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Player\Application\Query;
 
 use App\Player\Domain\Model\Player;

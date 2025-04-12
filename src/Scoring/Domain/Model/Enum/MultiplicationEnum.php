@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Scoring\Domain\Model\Enum;
 
 use App\Shared\Domain\Model\Enum\EnumTrait;

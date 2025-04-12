@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Scoring\Domain\Model;
 
 use App\Scoring\Domain\Model\Enum\MultiplicationEnum;
 use App\Scoring\Domain\Model\Enum\SectionEnum;
 use App\Shared\Domain\Model\Model;
+use InvalidArgumentException;
 
 class DartThrow implements Model
 {
@@ -26,8 +29,8 @@ class DartThrow implements Model
         $dartThrow->section = SectionEnum::from($section);
         $dartThrow->scoring = $scoring;
 
-        if (MultiplicationEnum::TRIPLE === $dartThrow->multiplication && SectionEnum::BULLSEYE === $dartThrow->section) {
-            throw new \InvalidArgumentException('Invalid dart throw');
+        if ($dartThrow->multiplication === MultiplicationEnum::TRIPLE && $dartThrow->section === SectionEnum::BULLSEYE) {
+            throw new InvalidArgumentException('Invalid dart throw');
         }
 
         return $dartThrow;

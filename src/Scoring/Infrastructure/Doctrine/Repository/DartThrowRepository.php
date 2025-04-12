@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Scoring\Infrastructure\Doctrine\Repository;
 
 use App\Scoring\Domain\Model\DartThrow;

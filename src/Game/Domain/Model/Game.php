@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Game\Domain\Model;
 
 use App\Game\Domain\Model\Enum\GameStatus;

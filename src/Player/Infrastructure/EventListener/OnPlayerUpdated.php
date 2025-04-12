@@ -1,10 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Player\Infrastructure\EventListener;
 
 use App\Player\Domain\Event\PlayerUpdatedEvent;
 use App\Player\Domain\Repository\PlayerRepository;
+
+use function count;
+
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -20,7 +26,7 @@ readonly class OnPlayerUpdated
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function onPlayerUpdated(PlayerUpdatedEvent $event): void
     {
@@ -38,7 +44,7 @@ readonly class OnPlayerUpdated
             $this->playerRepository->save($event->player);
 
             $this->entityManager->commit();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->entityManager->rollback();
             throw $exception;
         }

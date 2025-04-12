@@ -2,8 +2,12 @@
 
 namespace App\Scoring\Domain\Model\Enum;
 
+use App\Shared\Domain\Model\Enum\EnumTrait;
+
 enum SectionEnum: int
 {
+    use EnumTrait;
+
     case ONE = 1;
     case TWO = 2;
     case THREE = 3;

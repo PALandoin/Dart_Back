@@ -17,6 +17,10 @@ class GameResponse implements Response
      * @var PlayerResponse[]
      */
     public array $players;
+    /**
+     * @var array<int, int>
+     */
+    public array $scores;
 
     public static function fromModel(Model $model): self
     {
@@ -30,6 +34,7 @@ class GameResponse implements Response
 
         foreach ($model->getPlayers() as $player) {
             $response->players[] = PlayerResponse::fromModel($player);
+            $response->scores[$player->getId()] = $model->getPlayerScore($player);
         }
 
         return $response;

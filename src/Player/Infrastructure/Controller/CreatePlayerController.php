@@ -11,7 +11,6 @@ use App\Shared\Infrastructure\Service\GlobalValuesBag;
 use Nelmio\ApiDocBundle\Attribute\Model;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
@@ -41,7 +40,7 @@ readonly class CreatePlayerController
     ) {
     }
 
-    public function __invoke(#[MapRequestPayload] CreatePlayer $createPlayer, Request $request): JsonResponse
+    public function __invoke(#[MapRequestPayload] CreatePlayer $createPlayer): JsonResponse
     {
         try {
             $this->commandBus->dispatch($createPlayer);

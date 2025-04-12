@@ -1,19 +1,16 @@
 <?php
 
-namespace App\Game\Domain\Event;
+namespace App\Scoring\Domain\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
 
-class GameRequestedEvent extends Event
+class ScoringRequestedEvent extends Event
 {
     public int $id;
-    public ?int $playerId;
 
     public function __construct(
         int $id,
-        ?int $playerId = null,
     ) {
         $this->id = $id;
-        $this->playerId = $playerId;
     }
 }

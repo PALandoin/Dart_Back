@@ -7,6 +7,7 @@ use App\Player\Domain\Model\Player;
 use App\Shared\Domain\Model\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class Scoring implements Model
 {
@@ -18,6 +19,7 @@ class Scoring implements Model
     /**
      * @var Collection<int, DartThrow>
      */
+    #[Assert\Count(min: 1, max: 3)]
     private Collection $dartThrows;
 
     private Game $game;
@@ -27,6 +29,15 @@ class Scoring implements Model
     public function __construct(
     ) {
         $this->dartThrows = new ArrayCollection();
+    }
+
+    public static function create(Game $game, Player $player): self
+    {
+        $scoring = new self();
+        $scoring->game = $game;
+        $scoring->player = $player;
+
+        return $scoring;
     }
 
     public function getId(): int

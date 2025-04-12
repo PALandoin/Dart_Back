@@ -19,6 +19,20 @@ class DartThrow implements Model
 
     private Scoring $scoring;
 
+    public static function create(int $multiplication, int $section, Scoring $scoring): self
+    {
+        $dartThrow = new self();
+        $dartThrow->multiplication = MultiplicationEnum::from($multiplication);
+        $dartThrow->section = SectionEnum::from($section);
+        $dartThrow->scoring = $scoring;
+
+        if (MultiplicationEnum::TRIPLE === $dartThrow->multiplication && SectionEnum::BULLSEYE === $dartThrow->section) {
+            throw new \InvalidArgumentException('Invalid dart throw');
+        }
+
+        return $dartThrow;
+    }
+
     public function getId(): int
     {
         return $this->id;

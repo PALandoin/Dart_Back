@@ -16,6 +16,10 @@
             <join-column name="player_id" nullable="false"/>
         </many-to-one>
 
-        <one-to-many field="dartThrows" target-entity="App\Scoring\Domain\Model\DartThrow" mapped-by="scoring"/>
+        <one-to-many field="dartThrows" target-entity="App\Scoring\Domain\Model\DartThrow" mapped-by="scoring">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
     </entity>
 </doctrine-mapping>

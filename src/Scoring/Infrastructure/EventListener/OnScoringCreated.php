@@ -27,6 +27,9 @@ readonly class OnScoringCreated
     ) {
     }
 
+    /**
+     * @throws Exception
+     */
     public function onScoringCreated(ScoringCreatedEvent $event): void
     {
         try {
@@ -37,12 +40,14 @@ readonly class OnScoringCreated
             $error = $this->validator->validate($scoring);
 
             if (count($error) > 0) {
-                throw new UnprocessableEntityHttpException(message: $error, code: 422);
+                throw new UnprocessableEntityHttpException(message: $error->get(0)->getMessage(), code: 422);
             }
 
             if ($scoring->getGame()->getStatus() === GameStatus::FINISHED) {
                 throw new UnprocessableEntityHttpException(message: 'Game is finished', code: 422);
             }
+
+            $scoring->getGame()->setStatus(GameStatus::STARTED);
 
             $this->scoringRepository->save($event->scoring);
 

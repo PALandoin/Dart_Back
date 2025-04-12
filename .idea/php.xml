@@ -15,6 +15,19 @@
     </phpmd_settings>
   </component>
   <component name="MessDetectorOptionsConfiguration">
+    <option name="codeSize" value="true" />
+    <option name="controversial" value="true" />
+    <option name="customRulesets">
+      <list>
+        <RulesetDescriptor>
+          <option name="name" value="Symfony Application PHPMD Ruleset" />
+          <option name="path" value="$PROJECT_DIR$/rulesets.xml" />
+        </RulesetDescriptor>
+      </list>
+    </option>
+    <option name="design" value="true" />
+    <option name="naming" value="true" />
+    <option name="unusedCode" value="true" />
     <option name="transferred" value="true" />
   </component>
   <component name="PHPCSFixerOptionsConfiguration">

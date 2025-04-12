@@ -27,7 +27,7 @@ class Player implements Model
     private Collection $games;
 
     /**
-     * @return Collection<int, Scoring>
+     * @var Collection<int, Scoring>
      */
     private Collection $scorings;
 

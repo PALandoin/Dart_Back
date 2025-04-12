@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Functional\Scoring\Infrastructure\Controller;
 
 use App\Game\Domain\Model\Enum\GameStatus;
@@ -7,6 +9,9 @@ use App\Game\Infrastructure\Doctrine\Factory\GameFactory;
 use App\Player\Infrastructure\Doctrine\Factory\PlayerFactory;
 use App\Scoring\Infrastructure\Doctrine\Factory\DartThrowFactory;
 use App\Scoring\Infrastructure\Doctrine\Factory\ScoringFactory;
+
+use function sprintf;
+
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Zenstruck\Browser\Json;
 use Zenstruck\Browser\Test\HasBrowser;
@@ -16,8 +21,8 @@ use Zenstruck\Foundry\Test\ResetDatabase;
 class CreateScoringControllerTest extends KernelTestCase
 {
     use Factories;
-    use ResetDatabase;
     use HasBrowser;
+    use ResetDatabase;
 
     public function testCanCreateScoringOnCreatedGame(): void
     {
@@ -50,8 +55,8 @@ class CreateScoringControllerTest extends KernelTestCase
             ->assertThat('message', fn (Json $message) => $message->equals('Scoring successfully created'))
             ->assertThat('data.game.id', fn (Json $gameId) => $gameId->equals($game->getId()))
             ->assertThat('data.game.status', fn (Json $gameStatus) => $gameStatus->equals(GameStatus::STARTED->value))
-            ->assertThat('data.game.score.'.$player1->getId(), fn (Json $player1Score) => $player1Score->equals(20))
-            ->assertThat('data.game.score.'.$player2->getId(), fn (Json $player2Score) => $player2Score->equals(0))
+            ->assertThat('data.game.scores."'.$player1->getId().'"', fn (Json $player1Score) => $player1Score->equals(20))
+            ->assertThat('data.game.scores."'.$player2->getId().'"', fn (Json $player2Score) => $player2Score->equals(0))
             ->assertThat('data.player.id', fn (Json $playerId) => $playerId->equals($player1->getId()));
     }
 
@@ -121,7 +126,7 @@ class CreateScoringControllerTest extends KernelTestCase
         foreach ($game->getPlayers() as $player) {
             $response->assertThat(
                 sprintf('data.game.scores."%d"', $player->getId()),
-                fn (Json $score) => $score->equals($expectedScores[$player->getId()])
+                fn (Json $score) => $score->equals($expectedScores[$player->getId()]),
             );
         }
     }

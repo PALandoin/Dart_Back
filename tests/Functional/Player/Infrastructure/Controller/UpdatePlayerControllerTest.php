@@ -1,8 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Functional\Player\Infrastructure\Controller;
 
 use App\Player\Infrastructure\Doctrine\Factory\PlayerFactory;
+use App\Tests\ProviderClass;
+use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Zenstruck\Browser\Json;
 use Zenstruck\Browser\Test\HasBrowser;
@@ -15,132 +20,173 @@ class UpdatePlayerControllerTest extends KernelTestCase
     use HasBrowser;
     use ResetDatabase;
 
-    public function testPlayerCanBeUpdated(): void
+    public static function updatePlayerProvider(): Generator
     {
-        $player = PlayerFactory::createOne(['name' => 'Florian']);
+        // Case 1: Valid player update
+        yield 'successful_player_update' => [
+            new ProviderClass(
+                function () {
+                    $player = PlayerFactory::createOne(['name' => 'Florian']);
 
-        $response = $this->browser()
-            ->patch("api/players/{$player->getId()}",
-                [
-                    'json' => [
-                        'name' => 'Florian le gros bébé',
+                    return [
+                        'playerId' => $player->getId(),
+                        'request' => [
+                            'json' => [
+                                'name' => 'Florian le gros bébé',
+                            ],
+                        ],
+                    ];
+                },
+                200,
+                function (Json $response): void {
+                    $response->assertHas('message')
+                        ->assertHas('data')
+                        ->assertHas('data.id')
+                        ->assertHas('data.name')
+                        ->assertThat('message', fn (Json $message) => $message->equals('Player successfully updated'))
+                        ->assertThat('data.name', fn (Json $name) => $name->equals('Florian le gros bébé'));
+
+                    $players = PlayerFactory::all();
+                    self::assertCount(1, $players);
+                },
+            ),
+        ];
+
+        // Case 2: Empty name validation error
+        yield 'empty_name_validation_error' => [
+            new ProviderClass(
+                function () {
+                    $player = PlayerFactory::createOne(['name' => 'Florian']);
+
+                    return [
+                        'playerId' => $player->getId(),
+                        'request' => [
+                            'json' => [
+                                'name' => '',
+                            ],
+                        ],
+                    ];
+                },
+                422,
+                function (Json $response): void {
+                    $response->assertHas('message')
+                        ->assertHas('data')
+                        ->assertHas('data.name')
+                        ->assertThat('message', fn (Json $message) => $message->equals('Validation error'))
+                        ->assertThat('data.name', fn (Json $name) => $name->equals('This value should not be blank.'));
+                },
+            ),
+        ];
+
+        // Case 3: No name in body validation error
+        yield 'no_name_in_body_validation_error' => [
+            new ProviderClass(
+                function () {
+                    $player = PlayerFactory::createOne(['name' => 'Florian']);
+
+                    return [
+                        'playerId' => $player->getId(),
+                        'request' => [
+                            'json' => [],
+                        ],
+                    ];
+                },
+                422,
+                function (Json $response): void {
+                    $response->assertHas('message')
+                        ->assertHas('data')
+                        ->assertHas('data.name')
+                        ->assertThat('message', fn (Json $message) => $message->equals('Validation error'))
+                        ->assertThat('data.name', fn (Json $name) => $name->equals('This value should not be blank.'));
+                },
+            ),
+        ];
+
+        // Case 4: Null name validation error
+        yield 'null_name_validation_error' => [
+            new ProviderClass(
+                function () {
+                    $player = PlayerFactory::createOne(['name' => 'Florian']);
+
+                    return [
+                        'playerId' => $player->getId(),
+                        'request' => [
+                            'json' => [
+                                'name' => null,
+                            ],
+                        ],
+                    ];
+                },
+                422,
+                function (Json $response): void {
+                    $response->assertHas('message')
+                        ->assertHas('data')
+                        ->assertHas('data.name')
+                        ->assertThat('message', fn (Json $message) => $message->equals('Validation error'))
+                        ->assertThat('data.name', fn (Json $name) => $name->equals('This value should be of type string.'));
+                },
+            ),
+        ];
+
+        // Case 5: Already existing name validation error
+        yield 'duplicate_name_validation_error' => [
+            new ProviderClass(
+                function () {
+                    PlayerFactory::createOne(['name' => 'Florian le gros bébé']);
+                    $player = PlayerFactory::createOne(['name' => 'Florian']);
+
+                    return [
+                        'playerId' => $player->getId(),
+                        'request' => [
+                            'json' => [
+                                'name' => 'Florian le gros bébé',
+                            ],
+                        ],
+                    ];
+                },
+                422,
+                function (Json $response): void {
+                    $response->assertHas('message')
+                        ->assertThat('message', fn (Json $message) => $message->contains('This value is already used'));
+                },
+            ),
+        ];
+
+        // Case 6: Player not found error
+        yield 'player_not_found_error' => [
+            new ProviderClass(
+                fn () => [
+                    'playerId' => 1,
+                    'request' => [
+                        'json' => [
+                            'name' => 'Florian le gros bébé',
+                        ],
                     ],
-                ]
-            )
-            ->assertStatus(200)
-            ->json();
-
-        $response->assertHas('message')
-            ->assertHas('data')
-            ->assertHas('data.id')
-            ->assertHas('data.name')
-            ->assertThat('message', fn (Json $message) => $message->equals('Player successfully updated'))
-            ->assertThat('data.name', fn (Json $name) => $name->equals('Florian le gros bébé'));
-
-        $players = PlayerFactory::all();
-
-        $this->assertCount(1, $players);
+                ],
+                404,
+                function (Json $response): void {
+                    $response->assertHas('message')
+                        ->assertThat(
+                            'message',
+                            fn (Json $message) => $message->equals('Handling "App\Player\Application\Command\UpdatePlayer\UpdatePlayer" failed: Player with id 1 not found'),
+                        );
+                },
+            ),
+        ];
     }
 
-    public function testPlayerCannotBeUpdatedWithEmptyName(): void
+    #[DataProvider('updatePlayerProvider')]
+    public function testUpdatePlayer(ProviderClass $testCase): void
     {
-        $player = PlayerFactory::createOne(['name' => 'Florian']);
+        $requestData = $testCase->getRequestData();
+        $playerId = $requestData['playerId'];
+        $request = $requestData['request'] ?? [];
 
         $response = $this->browser()
-            ->patch("api/players/{$player->getId()}",
-                [
-                    'json' => [
-                        'name' => '',
-                    ],
-                ]
-            )
-            ->assertStatus(422)
+            ->patch("api/players/{$playerId}", $request)
+            ->assertStatus($testCase->getExpectedStatus())
             ->json();
 
-        $response->assertHas('message')
-            ->assertHas('data')
-            ->assertHas('data.name')
-            ->assertThat('message', fn (Json $message) => $message->equals('Validation error'))
-            ->assertThat('data.name', fn (Json $name) => $name->equals('This value should not be blank.'));
-    }
-
-    public function testPlayerCannotBeUpdatedWithNoNameInBody(): void
-    {
-        $player = PlayerFactory::createOne(['name' => 'Florian']);
-
-        $response = $this->browser()
-            ->patch("api/players/{$player->getId()}",
-                [
-                    'json' => [
-                    ],
-                ]
-            )
-            ->assertStatus(422)
-            ->json();
-
-        $response->assertHas('message')
-            ->assertHas('data')
-            ->assertHas('data.name')
-            ->assertThat('message', fn (Json $message) => $message->equals('Validation error'))
-            ->assertThat('data.name', fn (Json $name) => $name->equals('This value should not be blank.'));
-    }
-
-    public function testPlayerCannotBeUpdatedWithNullName(): void
-    {
-        $player = PlayerFactory::createOne(['name' => 'Florian']);
-
-        $response = $this->browser()
-            ->patch("api/players/{$player->getId()}",
-                [
-                    'json' => [
-                        'name' => null,
-                    ],
-                ]
-            )
-            ->assertStatus(422)
-            ->json();
-
-        $response->assertHas('message')
-            ->assertHas('data')
-            ->assertHas('data.name')
-            ->assertThat('message', fn (Json $message) => $message->equals('Validation error'))
-            ->assertThat('data.name', fn (Json $name) => $name->equals('This value should be of type string.'));
-    }
-
-    public function testPlayerCannotBeUpdatedWithAlreadyExistingName(): void
-    {
-        PlayerFactory::createOne(['name' => 'Florian le gros bébé']);
-        $player = PlayerFactory::createOne(['name' => 'Florian']);
-
-        $response = $this->browser()
-            ->patch("api/players/{$player->getId()}",
-                [
-                    'json' => [
-                        'name' => 'Florian le gros bébé',
-                    ],
-                ]
-            )
-            ->assertStatus(422)
-            ->json();
-
-        $response->assertHas('message')
-            ->assertThat('message', fn (Json $message) => $message->contains('This value is already used'));
-    }
-
-    public function testPlayerCannotBeUpdatedWithNoPlayer(): void
-    {
-        $response = $this->browser()
-            ->patch('api/players/1',
-                [
-                    'json' => [
-                        'name' => 'Florian le gros bébé',
-                    ],
-                ]
-            )
-            ->assertStatus(404)
-            ->json();
-
-        $response->assertHas('message')
-            ->assertThat('message', fn (Json $message) => $message->equals('Handling "App\Player\Application\Command\UpdatePlayer\UpdatePlayer" failed: Player with id 1 not found'));
+        $testCase->assertResponse($response);
     }
 }

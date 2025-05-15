@@ -32,7 +32,7 @@ class UpdatePlayerControllerTest extends KernelTestCase
                         'playerId' => $player->getId(),
                         'request' => [
                             'json' => [
-                                'name' => 'Florian le gros bébé',
+                                'name' => 'Pierre-Arnaud',
                             ],
                         ],
                     ];
@@ -43,8 +43,8 @@ class UpdatePlayerControllerTest extends KernelTestCase
                         ->assertHas('data')
                         ->assertHas('data.id')
                         ->assertHas('data.name')
-                        ->assertThat('message', fn (Json $message) => $message->equals('Player successfully updated'))
-                        ->assertThat('data.name', fn (Json $name) => $name->equals('Florian le gros bébé'));
+                        ->assertThat('message', fn(Json $message) => $message->equals('Player successfully updated'))
+                        ->assertThat('data.name', fn(Json $name) => $name->equals('Pierre-Arnaud'));
 
                     $players = PlayerFactory::all();
                     self::assertCount(1, $players);
@@ -72,8 +72,8 @@ class UpdatePlayerControllerTest extends KernelTestCase
                     $response->assertHas('message')
                         ->assertHas('data')
                         ->assertHas('data.name')
-                        ->assertThat('message', fn (Json $message) => $message->equals('Validation error'))
-                        ->assertThat('data.name', fn (Json $name) => $name->equals('This value should not be blank.'));
+                        ->assertThat('message', fn(Json $message) => $message->equals('Validation error'))
+                        ->assertThat('data.name', fn(Json $name) => $name->equals('This value should not be blank.'));
                 },
             ),
         ];
@@ -96,8 +96,8 @@ class UpdatePlayerControllerTest extends KernelTestCase
                     $response->assertHas('message')
                         ->assertHas('data')
                         ->assertHas('data.name')
-                        ->assertThat('message', fn (Json $message) => $message->equals('Validation error'))
-                        ->assertThat('data.name', fn (Json $name) => $name->equals('This value should not be blank.'));
+                        ->assertThat('message', fn(Json $message) => $message->equals('Validation error'))
+                        ->assertThat('data.name', fn(Json $name) => $name->equals('This value should not be blank.'));
                 },
             ),
         ];
@@ -122,8 +122,8 @@ class UpdatePlayerControllerTest extends KernelTestCase
                     $response->assertHas('message')
                         ->assertHas('data')
                         ->assertHas('data.name')
-                        ->assertThat('message', fn (Json $message) => $message->equals('Validation error'))
-                        ->assertThat('data.name', fn (Json $name) => $name->equals('This value should be of type string.'));
+                        ->assertThat('message', fn(Json $message) => $message->equals('Validation error'))
+                        ->assertThat('data.name', fn(Json $name) => $name->equals('This value should be of type string.'));
                 },
             ),
         ];
@@ -132,14 +132,14 @@ class UpdatePlayerControllerTest extends KernelTestCase
         yield 'duplicate_name_validation_error' => [
             new ProviderClass(
                 function () {
-                    PlayerFactory::createOne(['name' => 'Florian le gros bébé']);
+                    PlayerFactory::createOne(['name' => 'Florian de test']);
                     $player = PlayerFactory::createOne(['name' => 'Florian']);
 
                     return [
                         'playerId' => $player->getId(),
                         'request' => [
                             'json' => [
-                                'name' => 'Florian le gros bébé',
+                                'name' => 'Florian de test',
                             ],
                         ],
                     ];
@@ -147,7 +147,7 @@ class UpdatePlayerControllerTest extends KernelTestCase
                 422,
                 function (Json $response): void {
                     $response->assertHas('message')
-                        ->assertThat('message', fn (Json $message) => $message->contains('This value is already used'));
+                        ->assertThat('message', fn(Json $message) => $message->contains('This value is already used'));
                 },
             ),
         ];
@@ -155,11 +155,11 @@ class UpdatePlayerControllerTest extends KernelTestCase
         // Case 6: Player not found error
         yield 'player_not_found_error' => [
             new ProviderClass(
-                fn () => [
+                fn() => [
                     'playerId' => 1,
                     'request' => [
                         'json' => [
-                            'name' => 'Florian le gros bébé',
+                            'name' => 'Florian',
                         ],
                     ],
                 ],
@@ -168,7 +168,7 @@ class UpdatePlayerControllerTest extends KernelTestCase
                     $response->assertHas('message')
                         ->assertThat(
                             'message',
-                            fn (Json $message) => $message->equals('Handling "App\Player\Application\Command\UpdatePlayer\UpdatePlayer" failed: Player with id 1 not found'),
+                            fn(Json $message) => $message->equals('Handling "App\Player\Application\Command\UpdatePlayer\UpdatePlayer" failed: Player with id 1 not found'),
                         );
                 },
             ),

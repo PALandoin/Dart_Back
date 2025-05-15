@@ -10,29 +10,13 @@
   <component name="MessDetector">
     <phpmd_settings>
       <phpmd_by_interpreter interpreter_id="1e659843-435a-46e5-91c6-79d322c237b1" tool_path="/app/vendor/bin/phpmd" timeout="30000" />
-      <phpmd_by_interpreter asDefaultInterpreter="true" deletedFromTheList="true" interpreter_id="1e659843-435a-46e5-91c6-79d322c237b1" tool_path="/app/vendor/bin/phpmd" timeout="30000" />
       <MessDetectorConfiguration deletedFromTheList="true" tool_path="$PROJECT_DIR$/vendor/bin/phpmd" />
     </phpmd_settings>
   </component>
   <component name="MessDetectorOptionsConfiguration">
-    <option name="codeSize" value="true" />
-    <option name="controversial" value="true" />
-    <option name="customRulesets">
-      <list>
-        <RulesetDescriptor>
-          <option name="name" value="Symfony Application PHPMD Ruleset" />
-          <option name="path" value="$PROJECT_DIR$/rulesets.xml" />
-        </RulesetDescriptor>
-      </list>
-    </option>
-    <option name="design" value="true" />
-    <option name="naming" value="true" />
-    <option name="unusedCode" value="true" />
     <option name="transferred" value="true" />
   </component>
   <component name="PHPCSFixerOptionsConfiguration">
-    <option name="codingStandard" value="Custom" />
-    <option name="rulesetPath" value="$PROJECT_DIR$/.php-cs-fixer.dist.php" />
     <option name="transferred" value="true" />
   </component>
   <component name="PHPCodeSnifferOptionsConfiguration">
@@ -50,9 +34,6 @@
     <phpcs_settings>
       <phpcs_by_interpreter asDefaultInterpreter="true" interpreter_id="1e659843-435a-46e5-91c6-79d322c237b1" timeout="30000" />
     </phpcs_settings>
-  </component>
-  <component name="PhpExternalFormatter">
-    <option name="externalFormatter" value="PHP_CS_FIXER" />
   </component>
   <component name="PhpIncludePathManager">
     <include_path>
@@ -267,13 +248,6 @@
     </phpInfoCache>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.3" />
-  <component name="PhpStan">
-    <PhpStan_settings>
-      <phpstan_by_interpreter interpreter_id="1e659843-435a-46e5-91c6-79d322c237b1" tool_path="/app/vendor/bin/phpstan" timeout="60000" />
-      <phpstan_by_interpreter asDefaultInterpreter="true" deletedFromTheList="true" interpreter_id="1032155c-a236-47e6-855d-c6db9688eaaf" tool_path="/opt/project/vendor/bin/phpstan" timeout="60000" />
-      <PhpStanConfiguration deletedFromTheList="true" tool_path="$PROJECT_DIR$/vendor/bin/phpstan" />
-    </PhpStan_settings>
-  </component>
   <component name="PhpStanOptionsConfiguration">
     <option name="config" value="$PROJECT_DIR$/phpstan.dist.neon" />
     <option name="transferred" value="true" />

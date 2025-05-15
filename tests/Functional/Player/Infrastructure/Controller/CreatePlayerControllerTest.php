@@ -25,10 +25,10 @@ class CreatePlayerControllerTest extends KernelTestCase
         // Case 1: Valid player creation
         yield 'successful_player_creation' => [
             new ProviderClass(
-                fn () => [
+                fn() => [
                     'request' => [
                         'json' => [
-                            'name' => 'Florian le gros bébé',
+                            'name' => 'Florian',
                         ],
                     ],
                 ],
@@ -38,8 +38,8 @@ class CreatePlayerControllerTest extends KernelTestCase
                         ->assertHas('data')
                         ->assertHas('data.id')
                         ->assertHas('data.name')
-                        ->assertThat('message', fn (Json $message) => $message->equals('Player successfully created'))
-                        ->assertThat('data.name', fn (Json $name) => $name->equals('Florian le gros bébé'));
+                        ->assertThat('message', fn(Json $message) => $message->equals('Player successfully created'))
+                        ->assertThat('data.name', fn(Json $name) => $name->equals('Florian'));
 
                     $players = PlayerFactory::all();
                     self::assertCount(1, $players);
@@ -50,7 +50,7 @@ class CreatePlayerControllerTest extends KernelTestCase
         // Case 2: Null name validation error
         yield 'null_name_validation_error' => [
             new ProviderClass(
-                fn () => [
+                fn() => [
                     'request' => [
                         'json' => [
                             'name' => null,
@@ -62,8 +62,8 @@ class CreatePlayerControllerTest extends KernelTestCase
                     $response->assertHas('message')
                         ->assertHas('data')
                         ->assertHas('data.name')
-                        ->assertThat('message', fn (Json $message) => $message->equals('Validation error'))
-                        ->assertThat('data.name', fn (Json $name) => $name->equals('This value should be of type string.'));
+                        ->assertThat('message', fn(Json $message) => $message->equals('Validation error'))
+                        ->assertThat('data.name', fn(Json $name) => $name->equals('This value should be of type string.'));
 
                     $players = PlayerFactory::all();
                     self::assertCount(0, $players);
@@ -74,7 +74,7 @@ class CreatePlayerControllerTest extends KernelTestCase
         // Case 3: Empty name validation error
         yield 'empty_name_validation_error' => [
             new ProviderClass(
-                fn () => [
+                fn() => [
                     'request' => [
                         'json' => [
                             'name' => '',
@@ -90,8 +90,8 @@ class CreatePlayerControllerTest extends KernelTestCase
                     $response->assertHas('message')
                         ->assertHas('data')
                         ->assertHas('data.name')
-                        ->assertThat('message', fn (Json $message) => $message->equals('Validation error'))
-                        ->assertThat('data.name', fn (Json $name) => $name->equals('This value should not be blank.'));
+                        ->assertThat('message', fn(Json $message) => $message->equals('Validation error'))
+                        ->assertThat('data.name', fn(Json $name) => $name->equals('This value should not be blank.'));
 
                     $players = PlayerFactory::all();
                     self::assertCount(0, $players);
@@ -103,12 +103,12 @@ class CreatePlayerControllerTest extends KernelTestCase
         yield 'duplicate_name_validation_error' => [
             new ProviderClass(
                 function () {
-                    PlayerFactory::createOne(['name' => 'Florian le gros bébé']);
+                    PlayerFactory::createOne(['name' => 'Florian']);
 
                     return [
                         'request' => [
                             'json' => [
-                                'name' => 'Florian le gros bébé',
+                                'name' => 'Florian',
                             ],
                             'headers' => [
                                 'Content-Type' => 'application/json',
@@ -120,7 +120,7 @@ class CreatePlayerControllerTest extends KernelTestCase
                 422,
                 function (Json $response): void {
                     $response->assertHas('message')
-                        ->assertThat('message', fn (Json $message) => $message->contains('This value is already used'));
+                        ->assertThat('message', fn(Json $message) => $message->contains('This value is already used'));
 
                     $players = PlayerFactory::all();
                     self::assertCount(1, $players);

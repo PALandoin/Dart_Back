@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Player\Infrastructure\Doctrine\Factory;
 
 use App\Player\Domain\Model\Player;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Game\Infrastructure\EventListener;
 
 use App\Game\Domain\Event\GameRequestedEvent;
@@ -16,10 +18,14 @@ readonly class OnGameRequested
 
     public function onGameRequested(GameRequestedEvent $event): void
     {
-        $player = $this->gameRepository->find($event->id);
+        $game = $this->gameRepository->find($event->id);
 
-        if (null === $player) {
+        if ($game === null) {
             throw new NotFoundHttpException('Game with id '.$event->id.' not found', code: 404);
+        }
+
+        if ($event->playerId !== null && $game->getPlayers()->filter(fn ($player) => $player->getId() === $event->playerId)->isEmpty()) {
+            throw new NotFoundHttpException('Game with id '.$event->id.' not found for player with id '.$event->playerId, code: 422);
         }
     }
 }

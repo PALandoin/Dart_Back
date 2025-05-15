@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Player\Infrastructure\EventListener;
 
 use App\Player\Domain\Event\PlayerRequestedEvent;
@@ -19,7 +21,7 @@ readonly class OnPlayerRequested
     {
         $player = $this->playerRepository->find($event->id);
 
-        if (null === $player) {
+        if ($player === null) {
             throw new NotFoundHttpException('Player with id '.$event->id.' not found', code: 404);
         }
     }

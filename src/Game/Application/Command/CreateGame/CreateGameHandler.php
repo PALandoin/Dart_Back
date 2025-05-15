@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Game\Application\Command\CreateGame;
 
 use App\Game\Domain\Event\GameCreatedEvent;

@@ -31,6 +31,27 @@
             </list>
           </settings>
         </remote-mappings>
+        <remote-mappings server-id="php@6afc66c7-30a7-4948-a36b-38a22a588f81">
+          <settings>
+            <list>
+              <mapping local-root="$PROJECT_DIR$" remote-root="/opt/project" />
+            </list>
+          </settings>
+        </remote-mappings>
+        <remote-mappings server-id="php@097a4d18-5c27-418c-a4b1-3d4cd3adcf0c">
+          <settings>
+            <list>
+              <mapping local-root="$PROJECT_DIR$" remote-root="/app" />
+            </list>
+          </settings>
+        </remote-mappings>
+        <remote-mappings server-id="php@1e659843-435a-46e5-91c6-79d322c237b1">
+          <settings>
+            <list>
+              <mapping local-root="$PROJECT_DIR$" remote-root="/app" />
+            </list>
+          </settings>
+        </remote-mappings>
       </list>
     </list>
   </component>

@@ -19,6 +19,6 @@ scoring:
         path: ../src/Scoring/Infrastructure/Controller
         namespace: App\Scoring\Infrastructure\Controller
     type: attribute
-    prefix: api/scoring
+    prefix: api/scorings
     trailing_slash_on_root: false
     name_prefix: api_scoring_

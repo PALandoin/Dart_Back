@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Game\Infrastructure\Doctrine\Repository;
 
 use App\Game\Domain\Model\Game;

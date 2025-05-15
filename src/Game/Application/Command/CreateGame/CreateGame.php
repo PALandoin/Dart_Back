@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Game\Application\Command\CreateGame;
 
 use App\Shared\Domain\Bus\Command\Command;
@@ -15,7 +17,7 @@ class CreateGame implements Command
         #[Assert\All(
             constraints: [
                 new Assert\Type(type: 'int'),
-            ]
+            ],
         )]
         public array $players,
     ) {

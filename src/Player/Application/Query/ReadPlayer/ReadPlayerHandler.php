@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Player\Application\Query\ReadPlayer;
 
 use App\Player\Application\Query\PlayerResponse;
@@ -7,6 +9,7 @@ use App\Player\Domain\Event\PlayerRequestedEvent;
 use App\Player\Domain\Model\Player;
 use App\Player\Domain\Repository\PlayerRepository;
 use App\Shared\Domain\Bus\Query\QueryHandler;
+use Exception;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -20,7 +23,7 @@ readonly class ReadPlayerHandler implements QueryHandler
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function __invoke(ReadPlayer $readPlayer): PlayerResponse
     {

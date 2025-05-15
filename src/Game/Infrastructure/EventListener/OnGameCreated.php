@@ -1,11 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Game\Infrastructure\EventListener;
 
 use App\Game\Domain\Event\GameCreatedEvent;
 use App\Game\Domain\Repository\GameRepository;
 use App\Shared\Infrastructure\Service\GlobalValuesBag;
+
+use function count;
+
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -21,7 +27,7 @@ readonly class OnGameCreated
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function onGameCreated(GameCreatedEvent $event): void
     {
@@ -33,7 +39,7 @@ readonly class OnGameCreated
             $error = $this->validator->validate($game);
 
             if (count($error) > 0) {
-                throw new UnprocessableEntityHttpException(message: $error, code: 422);
+                throw new UnprocessableEntityHttpException(message: (string) $error->get(0)->getMessage(), code: 422);
             }
 
             $this->gameRepository->save($event->game);
@@ -41,7 +47,7 @@ readonly class OnGameCreated
             GlobalValuesBag::getInstance()->set('game_id', $event->game->getId());
 
             $this->entityManager->commit();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->entityManager->rollback();
             throw $exception;
         }

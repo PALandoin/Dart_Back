@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Game\Infrastructure\Controller;
 
 use App\Game\Application\Query\GameResponse;
@@ -10,6 +12,7 @@ use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
+use Throwable;
 
 #[AsController]
 #[Route('/{id}', name: 'read', requirements: ['id' => '\d+'], methods: ['GET'], format: 'json')]
@@ -24,9 +27,9 @@ use Symfony\Component\Routing\Attribute\Route;
                     new OA\Property(property: 'message', type: 'string', example: 'Game successfully read'),
                     new OA\Property(property: 'data', ref: new Model(type: GameResponse::class)),
                 ],
-            )
+            ),
         ),
-    ]
+    ],
 )]
 readonly class ReadGameController
 {
@@ -42,7 +45,7 @@ readonly class ReadGameController
             $game = $this->queryBus->ask($readGame);
 
             return new JsonResponse(['message' => 'Game successfully read', 'data' => $game], 200);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return new JsonResponse(['message' => $e->getMessage()], $e->getCode() < 100 ? 500 : $e->getCode());
         }
     }

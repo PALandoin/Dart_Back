@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Shared\Infrastructure\Service;
 
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
@@ -42,7 +44,7 @@ class ValidationExceptionListener
                 'message' => 'Validation error',
                 'data' => $errors,
             ],
-            Response::HTTP_UNPROCESSABLE_ENTITY
+            Response::HTTP_UNPROCESSABLE_ENTITY,
         );
         $event->setResponse($jsonResponse);
         $event->stopPropagation();

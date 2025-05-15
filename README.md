@@ -1,51 +1,108 @@
-# Symfony Docker
+# Dart Back
 
-A [Docker](https://www.docker.com/)-based installer and runtime for the [Symfony](https://symfony.com) web framework,
-with [FrankenPHP](https://frankenphp.dev) and [Caddy](https://caddyserver.com/) inside!
+A modern PHP application built with Symfony 7 following Clean Architecture and Domain-Driven Design principles for
+managing players, games, and scoring.
 
-![CI](https://github.com/dunglas/symfony-docker/workflows/CI/badge.svg)
+## Tech Stack
 
-## Getting Started
-
-1. If not already done, [install Docker Compose](https://docs.docker.com/compose/install/) (v2.10+)
-2. Run `docker compose build --no-cache` to build fresh images
-3. Run `docker compose up --pull always -d --wait` to set up and start a fresh Symfony project
-4. Open `https://localhost` in your favorite web browser and [accept the auto-generated TLS certificate](https://stackoverflow.com/a/15076602/1352334)
-5. Run `docker compose down --remove-orphans` to stop the Docker containers.
+- **PHP 8**
+- **Symfony 7** framework
+- **FrankenPHP** (High-performance PHP application server)
+- **Docker** for containerization
+- **PostgreSQL** database
+- **Clean Architecture** and **Domain-Driven Design** methodology
 
 ## Features
 
-* Production, development and CI ready
-* Just 1 service by default
-* Blazing-fast performance thanks to [the worker mode of FrankenPHP](https://github.com/dunglas/frankenphp/blob/main/docs/worker.md) (automatically enabled in prod mode)
-* [Installation of extra Docker Compose services](docs/extra-services.md) with Symfony Flex
-* Automatic HTTPS (in dev and prod)
-* HTTP/3 and [Early Hints](https://symfony.com/blog/new-in-symfony-6-3-early-hints) support
-* Real-time messaging thanks to a built-in [Mercure hub](https://symfony.com/doc/current/mercure.html)
-* [Vulcain](https://vulcain.rocks) support
-* Native [XDebug](docs/xdebug.md) integration
-* Super-readable configuration
+- **Player Management**: Create, update, and manage players with unique names
+- **Game Management**: Track games, their statuses, and associated players
+- **Scoring System**: Record and retrieve scores for players in specific games
+- **Event-Driven Architecture**: Uses Symfony Messenger for handling domain events
+- **Validation**: Ensures data integrity with Symfony Validator
+- **Error Handling**: Graceful handling of validation and transactional errors
 
-**Enjoy!**
+## Prerequisites
 
-## Docs
+- Docker Compose (v2.10+)
+- Git
 
-1. [Options available](docs/options.md)
-2. [Using Symfony Docker with an existing project](docs/existing-project.md)
-3. [Support for extra services](docs/extra-services.md)
-4. [Deploying in production](docs/production.md)
-5. [Debugging with Xdebug](docs/xdebug.md)
-6. [TLS Certificates](docs/tls.md)
-7. [Using MySQL instead of PostgreSQL](docs/mysql.md)
-8. [Using Alpine Linux instead of Debian](docs/alpine.md)
-9. [Using a Makefile](docs/makefile.md)
-10. [Updating the template](docs/updating.md)
-11. [Troubleshooting](docs/troubleshooting.md)
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/PALandoin/Dart_Back
+   cd Dart_Back
+   ```
+
+2. Build the project:
+   ```bash
+   docker compose build --no-cache
+   ```
+
+3. Start the application:
+   ```bash
+   docker compose up --pull always -d --wait
+   ```
+
+4. Access the application:
+    - Open https://localhost in your browser and accept the TLS certificate
+
+5. Stop the application:
+   ```bash
+   docker compose down --remove-orphans
+   ```
+
+## Configuration
+
+- **Environment Variables**: Configure database credentials and other settings in the `.env` file
+- **Database**: PostgreSQL is used as the default database. Ensure the `POSTGRES_*` variables are set correctly
+
+## Project Structure
+
+The project follows a Clean Architecture approach with Domain-Driven Design principles:
+
+```
+src/
+├── Domain/              # Domain layer: entities, value objects, domain services
+│   ├── Entity/          # Domain entities like Player, Game, Score
+│   ├── ValueObject/     # Value objects for immutable concepts
+│   ├── Repository/      # Repository interfaces
+│   ├── Service/         # Domain services
+│   └── Event/           # Domain events like PlayerCreatedEvent
+├── Application/         # Application layer: use cases, commands, queries
+│   ├── Command/         # Command handlers
+│   ├── Query/           # Query handlers
+│   ├── EventListener/   # Application event listeners
+│   └── Service/         # Application services
+├── Infrastructure/      # Infrastructure layer: implementation details
+│   ├── Repository/      # Repository implementations
+│   ├── Persistence/     # Database configurations
+│   └── Service/         # External service integrations
+└── UserInterface/       # User interface layer: controllers, forms, views
+    ├── Controller/      # Symfony controllers
+    ├── Form/            # Form types
+    └── Validator/       # Custom validators
+```
+
+## Development
+
+- **Testing**: Use PHPUnit for unit and integration tests
+- **Validation**: Symfony Validator ensures data consistency
+- **Event Listeners**: Custom event listeners handle domain events like PlayerCreatedEvent
+
+## Deployment
+
+- **Production Ready**: Optimized for production with Docker and Symfony best practices
+- **HTTPS**: Automatic HTTPS setup with Caddy
+
+## Troubleshooting
+
+- **Database Issues**: Check Docker logs for the database service:
+  ```bash
+  docker compose logs database
+  ```
+- **Validation Errors**: Ensure data meets the validation rules defined in the domain models
 
 ## License
 
-Symfony Docker is available under the MIT License.
-
-## Credits
-
-Created by [Kévin Dunglas](https://dunglas.dev), co-maintained by [Maxime Helias](https://twitter.com/maxhelias) and sponsored by [Les-Tilleuls.coop](https://les-tilleuls.coop).
+This project is available under the MIT License.

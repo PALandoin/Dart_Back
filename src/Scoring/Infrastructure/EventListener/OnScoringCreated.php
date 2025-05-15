@@ -40,7 +40,7 @@ readonly class OnScoringCreated
             $error = $this->validator->validate($scoring);
 
             if (count($error) > 0) {
-                throw new UnprocessableEntityHttpException(message: $error->get(0)->getMessage(), code: 422);
+                throw new UnprocessableEntityHttpException(message: (string) $error->get(0)->getMessage(), code: 422);
             }
 
             if ($scoring->getGame()->getStatus() === GameStatus::FINISHED) {

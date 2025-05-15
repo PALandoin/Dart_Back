@@ -39,7 +39,7 @@ readonly class OnGameCreated
             $error = $this->validator->validate($game);
 
             if (count($error) > 0) {
-                throw new UnprocessableEntityHttpException(message: $error->get(0)->getMessage(), code: 422);
+                throw new UnprocessableEntityHttpException(message: (string) $error->get(0)->getMessage(), code: 422);
             }
 
             $this->gameRepository->save($event->game);

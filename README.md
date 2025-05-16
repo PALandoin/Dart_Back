@@ -3,6 +3,10 @@
 A modern PHP application built with Symfony 7 following Clean Architecture and Domain-Driven Design principles for
 managing players, games, and scoring.
 
+This project used to be a sandbox for learning and experimenting with new technologies and concepts in PHP development
+during my last employment.
+It's now a personal project that I work on for showing a part of what I can do.
+
 ## Tech Stack
 
 - **PHP 8**

@@ -61,33 +61,6 @@ It's now a personal project that I work on for showing a part of what I can do.
 - **Environment Variables**: Configure database credentials and other settings in the `.env` file
 - **Database**: PostgreSQL is used as the default database. Ensure the `POSTGRES_*` variables are set correctly
 
-## Project Structure
-
-The project follows a Clean Architecture approach with Domain-Driven Design principles:
-
-```
-src/
-├── Domain/              # Domain layer: entities, value objects, domain services
-│   ├── Entity/          # Domain entities like Player, Game, Score
-│   ├── ValueObject/     # Value objects for immutable concepts
-│   ├── Repository/      # Repository interfaces
-│   ├── Service/         # Domain services
-│   └── Event/           # Domain events like PlayerCreatedEvent
-├── Application/         # Application layer: use cases, commands, queries
-│   ├── Command/         # Command handlers
-│   ├── Query/           # Query handlers
-│   ├── EventListener/   # Application event listeners
-│   └── Service/         # Application services
-├── Infrastructure/      # Infrastructure layer: implementation details
-│   ├── Repository/      # Repository implementations
-│   ├── Persistence/     # Database configurations
-│   └── Service/         # External service integrations
-└── UserInterface/       # User interface layer: controllers, forms, views
-    ├── Controller/      # Symfony controllers
-    ├── Form/            # Form types
-    └── Validator/       # Custom validators
-```
-
 ## Development
 
 - **Testing**: Use PHPUnit for unit and integration tests

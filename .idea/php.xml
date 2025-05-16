@@ -11,6 +11,7 @@
     <phpmd_settings>
       <phpmd_by_interpreter interpreter_id="1e659843-435a-46e5-91c6-79d322c237b1" tool_path="/app/vendor/bin/phpmd" timeout="30000" />
       <MessDetectorConfiguration deletedFromTheList="true" tool_path="$PROJECT_DIR$/vendor/bin/phpmd" />
+      <phpmd_by_interpreter asDefaultInterpreter="true" interpreter_id="1e659843-435a-46e5-91c6-79d322c237b1" tool_path="/app/vendor/bin/phpmd" timeout="30000" />
     </phpmd_settings>
   </component>
   <component name="MessDetectorOptionsConfiguration">
